@@ -131,22 +131,6 @@
       <!-- If using maven-assembly-plugin, you need to add the metaInf-services
         handler to the descriptor, which requires making a copy of
         jar-with-dependencies. -->
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.7.1</version>
-        <configuration>
-          <descriptors>${project.basedir}/maven-assembly-jar-with-dependencies.xml</descriptors>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
   </build>
   
