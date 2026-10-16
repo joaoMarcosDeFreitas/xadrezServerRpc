@@ -43,4 +43,16 @@ public interface ConectarResponseOrBuilder extends
    */
   com.google.protobuf.ByteString
       getStatusBytes();
+
+  /**
+   * <code>string nomeJogador = 4;</code>
+   * @return The nomeJogador.
+   */
+  java.lang.String getNomeJogador();
+  /**
+   * <code>string nomeJogador = 4;</code>
+   * @return The bytes for nomeJogador.
+   */
+  com.google.protobuf.ByteString
+      getNomeJogadorBytes();
 }
