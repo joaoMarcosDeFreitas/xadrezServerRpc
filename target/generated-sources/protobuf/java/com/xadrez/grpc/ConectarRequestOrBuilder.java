@@ -9,12 +9,24 @@ public interface ConectarRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string nomeJogador = 1;</code>
+   * <code>string idJogador = 1;</code>
+   * @return The idJogador.
+   */
+  java.lang.String getIdJogador();
+  /**
+   * <code>string idJogador = 1;</code>
+   * @return The bytes for idJogador.
+   */
+  com.google.protobuf.ByteString
+      getIdJogadorBytes();
+
+  /**
+   * <code>string nomeJogador = 2;</code>
    * @return The nomeJogador.
    */
   java.lang.String getNomeJogador();
   /**
-   * <code>string nomeJogador = 1;</code>
+   * <code>string nomeJogador = 2;</code>
    * @return The bytes for nomeJogador.
    */
   com.google.protobuf.ByteString

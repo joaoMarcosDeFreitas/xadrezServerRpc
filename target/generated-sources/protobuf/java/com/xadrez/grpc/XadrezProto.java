@@ -54,22 +54,23 @@ public final class XadrezProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014xadrez.proto\"&\n\017ConectarRequest\022\023\n\013nom" +
-      "eJogador\030\001 \001(\t\"G\n\020ConectarResponse\022\021\n\tid" +
-      "Jogador\030\001 \001(\t\022\020\n\010corPecas\030\002 \001(\t\022\016\n\006statu" +
-      "s\030\003 \001(\t\"d\n\rJogadaRequest\022\021\n\tidJogador\030\001 " +
-      "\001(\t\022\021\n\tidPartida\030\002 \001(\t\022\025\n\rposicaoOrigem\030" +
-      "\003 \001(\t\022\026\n\016posicaoDestino\030\004 \001(\t\"?\n\016JogadaR" +
-      "esponse\022\024\n\014jogadaValida\030\001 \001(\010\022\027\n\017mensage" +
-      "mRetorno\030\002 \001(\t\"\"\n\rEstadoRequest\022\021\n\tidPar" +
-      "tida\030\001 \001(\t\"N\n\016EstadoResponse\022\024\n\014posicaoP" +
-      "ecas\030\001 \001(\t\022\022\n\nturnoAtual\030\002 \001(\t\022\022\n\nestado" +
-      "Jogo\030\003 \001(\t2\264\001\n\rXadrezService\0228\n\017Conectar" +
-      "Jogador\022\020.ConectarRequest\032\021.ConectarResp" +
-      "onse\"\000\0221\n\014EnviarJogada\022\016.JogadaRequest\032\017" +
-      ".JogadaResponse\"\000\0226\n\021ObterEstadoDoJogo\022\016" +
-      ".EstadoRequest\032\017.EstadoResponse\"\000B \n\017com" +
-      ".xadrez.grpcB\013XadrezProtoP\001b\006proto3"
+      "\n\014xadrez.proto\"9\n\017ConectarRequest\022\021\n\tidJ" +
+      "ogador\030\001 \001(\t\022\023\n\013nomeJogador\030\002 \001(\t\"G\n\020Con" +
+      "ectarResponse\022\021\n\tidJogador\030\001 \001(\t\022\020\n\010corP" +
+      "ecas\030\002 \001(\t\022\016\n\006status\030\003 \001(\t\"d\n\rJogadaRequ" +
+      "est\022\021\n\tidJogador\030\001 \001(\t\022\021\n\tidPartida\030\002 \001(" +
+      "\t\022\025\n\rposicaoOrigem\030\003 \001(\t\022\026\n\016posicaoDesti" +
+      "no\030\004 \001(\t\"?\n\016JogadaResponse\022\024\n\014jogadaVali" +
+      "da\030\001 \001(\010\022\027\n\017mensagemRetorno\030\002 \001(\t\"\"\n\rEst" +
+      "adoRequest\022\021\n\tidPartida\030\001 \001(\t\"N\n\016EstadoR" +
+      "esponse\022\024\n\014posicaoPecas\030\001 \001(\t\022\022\n\nturnoAt" +
+      "ual\030\002 \001(\t\022\022\n\nestadoJogo\030\003 \001(\t2\264\001\n\rXadrez" +
+      "Service\0228\n\017ConectarJogador\022\020.ConectarReq" +
+      "uest\032\021.ConectarResponse\"\000\0221\n\014EnviarJogad" +
+      "a\022\016.JogadaRequest\032\017.JogadaResponse\"\000\0226\n\021" +
+      "ObterEstadoDoJogo\022\016.EstadoRequest\032\017.Esta" +
+      "doResponse\"\000B \n\017com.xadrez.grpcB\013XadrezP" +
+      "rotoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -80,7 +81,7 @@ public final class XadrezProto {
     internal_static_ConectarRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ConectarRequest_descriptor,
-        new java.lang.String[] { "NomeJogador", });
+        new java.lang.String[] { "IdJogador", "NomeJogador", });
     internal_static_ConectarResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_ConectarResponse_fieldAccessorTable = new

@@ -26,6 +26,7 @@ com\xadrez\grpc\EstadoResponse$1.class
 com\xadrez\grpc\EstadoResponse$Builder.class
 com\xadrez\grpc\JogadaResponse.class
 com\xadrez\grpc\XadrezServiceGrpc$XadrezServiceFutureStub.class
+com\xadrez\grpc\XadrezServiceImpl.class
 com\xadrez\grpc\EstadoResponseOrBuilder.class
 com\xadrez\grpc\JogadaRequest$Builder.class
 com\xadrez\grpc\XadrezServiceGrpc$MethodHandlers.class

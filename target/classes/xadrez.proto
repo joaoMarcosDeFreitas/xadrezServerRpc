@@ -13,7 +13,8 @@ service XadrezService {
 }
 
 message ConectarRequest {
-	string nomeJogador = 1;
+	string idJogador = 1;
+	string nomeJogador = 2;
 }
 
 message ConectarResponse {

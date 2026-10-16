@@ -17,6 +17,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private ConectarRequest() {
+    idJogador_ = "";
     nomeJogador_ = "";
   }
 
@@ -40,11 +41,50 @@ private static final long serialVersionUID = 0L;
             com.xadrez.grpc.ConectarRequest.class, com.xadrez.grpc.ConectarRequest.Builder.class);
   }
 
-  public static final int NOMEJOGADOR_FIELD_NUMBER = 1;
+  public static final int IDJOGADOR_FIELD_NUMBER = 1;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object idJogador_ = "";
+  /**
+   * <code>string idJogador = 1;</code>
+   * @return The idJogador.
+   */
+  @java.lang.Override
+  public java.lang.String getIdJogador() {
+    java.lang.Object ref = idJogador_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      idJogador_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string idJogador = 1;</code>
+   * @return The bytes for idJogador.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getIdJogadorBytes() {
+    java.lang.Object ref = idJogador_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      idJogador_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int NOMEJOGADOR_FIELD_NUMBER = 2;
   @SuppressWarnings("serial")
   private volatile java.lang.Object nomeJogador_ = "";
   /**
-   * <code>string nomeJogador = 1;</code>
+   * <code>string nomeJogador = 2;</code>
    * @return The nomeJogador.
    */
   @java.lang.Override
@@ -61,7 +101,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string nomeJogador = 1;</code>
+   * <code>string nomeJogador = 2;</code>
    * @return The bytes for nomeJogador.
    */
   @java.lang.Override
@@ -93,8 +133,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(idJogador_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, idJogador_);
+    }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nomeJogador_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, nomeJogador_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, nomeJogador_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -105,8 +148,11 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(idJogador_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, idJogador_);
+    }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nomeJogador_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, nomeJogador_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, nomeJogador_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -123,6 +169,8 @@ private static final long serialVersionUID = 0L;
     }
     com.xadrez.grpc.ConectarRequest other = (com.xadrez.grpc.ConectarRequest) obj;
 
+    if (!getIdJogador()
+        .equals(other.getIdJogador())) return false;
     if (!getNomeJogador()
         .equals(other.getNomeJogador())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -136,6 +184,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + IDJOGADOR_FIELD_NUMBER;
+    hash = (53 * hash) + getIdJogador().hashCode();
     hash = (37 * hash) + NOMEJOGADOR_FIELD_NUMBER;
     hash = (53 * hash) + getNomeJogador().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
@@ -269,6 +319,7 @@ private static final long serialVersionUID = 0L;
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
+      idJogador_ = "";
       nomeJogador_ = "";
       return this;
     }
@@ -304,6 +355,9 @@ private static final long serialVersionUID = 0L;
     private void buildPartial0(com.xadrez.grpc.ConectarRequest result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.idJogador_ = idJogador_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
         result.nomeJogador_ = nomeJogador_;
       }
     }
@@ -352,9 +406,14 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(com.xadrez.grpc.ConectarRequest other) {
       if (other == com.xadrez.grpc.ConectarRequest.getDefaultInstance()) return this;
+      if (!other.getIdJogador().isEmpty()) {
+        idJogador_ = other.idJogador_;
+        bitField0_ |= 0x00000001;
+        onChanged();
+      }
       if (!other.getNomeJogador().isEmpty()) {
         nomeJogador_ = other.nomeJogador_;
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -384,10 +443,15 @@ private static final long serialVersionUID = 0L;
               done = true;
               break;
             case 10: {
-              nomeJogador_ = input.readStringRequireUtf8();
+              idJogador_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000001;
               break;
             } // case 10
+            case 18: {
+              nomeJogador_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000002;
+              break;
+            } // case 18
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -405,9 +469,81 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
+    private java.lang.Object idJogador_ = "";
+    /**
+     * <code>string idJogador = 1;</code>
+     * @return The idJogador.
+     */
+    public java.lang.String getIdJogador() {
+      java.lang.Object ref = idJogador_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        idJogador_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string idJogador = 1;</code>
+     * @return The bytes for idJogador.
+     */
+    public com.google.protobuf.ByteString
+        getIdJogadorBytes() {
+      java.lang.Object ref = idJogador_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        idJogador_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string idJogador = 1;</code>
+     * @param value The idJogador to set.
+     * @return This builder for chaining.
+     */
+    public Builder setIdJogador(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      idJogador_ = value;
+      bitField0_ |= 0x00000001;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string idJogador = 1;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearIdJogador() {
+      idJogador_ = getDefaultInstance().getIdJogador();
+      bitField0_ = (bitField0_ & ~0x00000001);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string idJogador = 1;</code>
+     * @param value The bytes for idJogador to set.
+     * @return This builder for chaining.
+     */
+    public Builder setIdJogadorBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      idJogador_ = value;
+      bitField0_ |= 0x00000001;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object nomeJogador_ = "";
     /**
-     * <code>string nomeJogador = 1;</code>
+     * <code>string nomeJogador = 2;</code>
      * @return The nomeJogador.
      */
     public java.lang.String getNomeJogador() {
@@ -423,7 +559,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string nomeJogador = 1;</code>
+     * <code>string nomeJogador = 2;</code>
      * @return The bytes for nomeJogador.
      */
     public com.google.protobuf.ByteString
@@ -440,7 +576,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string nomeJogador = 1;</code>
+     * <code>string nomeJogador = 2;</code>
      * @param value The nomeJogador to set.
      * @return This builder for chaining.
      */
@@ -448,22 +584,22 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       nomeJogador_ = value;
-      bitField0_ |= 0x00000001;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
     /**
-     * <code>string nomeJogador = 1;</code>
+     * <code>string nomeJogador = 2;</code>
      * @return This builder for chaining.
      */
     public Builder clearNomeJogador() {
       nomeJogador_ = getDefaultInstance().getNomeJogador();
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
     /**
-     * <code>string nomeJogador = 1;</code>
+     * <code>string nomeJogador = 2;</code>
      * @param value The bytes for nomeJogador to set.
      * @return This builder for chaining.
      */
@@ -472,7 +608,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       nomeJogador_ = value;
-      bitField0_ |= 0x00000001;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
