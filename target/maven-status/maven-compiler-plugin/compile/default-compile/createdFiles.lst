@@ -4,6 +4,7 @@ com\xadrez\grpc\ConectarResponse.class
 com\xadrez\grpc\JogadaRequest$1.class
 com\xadrez\grpc\XadrezServiceGrpc.class
 com\xadrez\grpc\XadrezServiceGrpc$AsyncService.class
+com\xadrez\models\Jogador.class
 com\xadrez\grpc\ConectarResponse$1.class
 com\xadrez\grpc\JogadaRequest.class
 com\xadrez\grpc\JogadaResponseOrBuilder.class
