@@ -1,6 +1,7 @@
 package com.xadrez.grpc;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -15,81 +16,93 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 	@Override
 	public synchronized void conectarJogador(ConectarRequest request, io.grpc.stub.StreamObserver<com.xadrez.grpc.ConectarResponse> responseObserver) {
 		//coleta de dados ao conectar
-		String id = request.getIdJogador();
-		String nome = request.getNomeJogador();
+		String id = request.getIdJogador().trim();
+		String nome = request.getNomeJogador().trim();
 		
 		//verifica se nome está vazio
-		if(nome.trim().isEmpty()) {
+		if(nome.isEmpty()) {
 			//cria a exceção para retornar erro
-			Throwable excecao = Status.INVALID_ARGUMENT.withDescription("Nome inválido, insira um nome diferente e tente novamente").asRuntimeException(); 
+			Throwable excecao = Status.INVALID_ARGUMENT.withDescription("Nome inválido, insira um nome válido e tente novamente.").asRuntimeException(); 
 			
 			//lança o erro ao usuário
 			responseObserver.onError(excecao);
 			//retorna para nao dar seguimento na função
 			return;
-		}
+		} //verifica o tamanho do nome
+		else if (nome.length() > 15) {
+			//cria a exceção para retornar erro
+			Throwable excecao = Status.INVALID_ARGUMENT.withDescription("Nome muito longo, insira um nome válido e tente novamente.").asRuntimeException(); 
+			
+			//lança o erro ao usuário
+			responseObserver.onError(excecao);
+			//retorna para nao dar seguimento na função
+			return;
+		} 
 		
-		//verifica se pode entrar no jogo
-		if(listaJogadores.size() < 2) {
-			
-			//pode entrar no jogo
-			
-			//verifica se já tem id
-			if(id.isEmpty()) {
-				//gera id aleatório
-				id = UUID.randomUUID().toString();
-				//cria jogador sem cor e status
-				Jogador jogador = new Jogador(id, nome, "", "");
-				//define a cor da peça do jogador
-				jogador.setCorPecas(defineCorPecas(listaJogadores, jogador));
-				//define status ativo
-				jogador.setStatus("Ativo");
-				//envia para lista de jogadores
-				listaJogadores.put(id, jogador);
-			
-				//resposta ao servidor
-				
-				//montar resposta
-				ConectarResponse resposta = ConectarResponse.newBuilder()
-					.setIdJogador(jogador.getId())
-					.setNomeJogador(jogador.getNome())
-					.setCorPecas(jogador.getCorPecas())
-					.setStatus(jogador.getStatus())
-					.build();
-				
-				//enviar resposta
-				responseObserver.onNext(resposta);
-			
-				//fechar resposta
-				responseObserver.onCompleted();
-				
-				//já tem id, busca na lista e responde com dados já enviados
-			} else if(listaJogadores.containsKey(id)) {
-				//busca o jogador na lista
-				Jogador jogador = listaJogadores.get(id);
-				
-				//montar resposta
-				ConectarResponse resposta = ConectarResponse.newBuilder()
-					.setIdJogador(jogador.getId())
-					.setNomeJogador(jogador.getNome())
-					.setCorPecas(jogador.getCorPecas())
-					.setStatus(jogador.getStatus())
-					.build();
-				
-				//enviar resposta
-				responseObserver.onNext(resposta);
-			
-				//fechar resposta
-				responseObserver.onCompleted();
-			} else {
+		//verifica o nome do jogador para entender se é igual a outro
+		for(Map.Entry<String, Jogador> jogador : listaJogadores.entrySet()) {
+			if(!id.equals(jogador.getKey()) && nome.toLowerCase().equals(jogador.getValue().getNome())) {
 				//cria a exceção para retornar erro
-				Throwable excecao = Status.NOT_FOUND.withDescription("ID não encontrado. Tente reiniciar completamente a aplicação.").asRuntimeException(); 
+				Throwable excecao = Status.INVALID_ARGUMENT.withDescription("Nome já está em uso, mude e tente novamente.").asRuntimeException(); 
 				
 				//lança o erro ao usuário
 				responseObserver.onError(excecao);
 				//retorna para nao dar seguimento na função
 				return;
 			}
+		}
+		
+		//verificar se jogador está na lista
+		if (listaJogadores.containsKey(id)) {	
+			//busca o jogador na lista
+			Jogador jogador = listaJogadores.get(id);
+			jogador.setNome(nome);
+			
+			//montar resposta
+			ConectarResponse resposta = ConectarResponse.newBuilder()
+				.setIdJogador(jogador.getId())
+				.setNomeJogador(jogador.getNome())
+				.setCorPecas(jogador.getCorPecas())
+				.setStatus(jogador.getStatus())
+				.build();
+			
+			//enviar resposta
+			responseObserver.onNext(resposta);
+		
+			//fechar resposta
+			responseObserver.onCompleted();
+			//retorna pra parar o código
+			return;
+		}
+		 
+		//verifica se pode entrar no jogo
+		if(listaJogadores.size() < 2) {
+			//pode entrar no jogo
+			//gera id aleatório
+			id = UUID.randomUUID().toString();
+			//cria jogador sem cor e status
+			Jogador jogador = new Jogador(id, nome, "", "");
+			//define a cor da peça do jogador
+			jogador.setCorPecas(defineCorPecas(listaJogadores));
+			//define status ativo
+			jogador.setStatus("Ativo");
+			//envia para lista de jogadores
+			listaJogadores.put(id, jogador);
+		
+			//resposta ao servidor
+			//montar resposta
+			ConectarResponse resposta = ConectarResponse.newBuilder()
+				.setIdJogador(jogador.getId())
+				.setNomeJogador(jogador.getNome())
+				.setCorPecas(jogador.getCorPecas())
+				.setStatus(jogador.getStatus())
+				.build();
+			//enviar resposta
+			responseObserver.onNext(resposta);	
+			//fechar resposta
+			responseObserver.onCompleted();
+			//retorna para evitar que siga o código
+			return;
 		} else {
 			//cria a exceção para retornar erro
 			Throwable excecao = Status.FAILED_PRECONDITION.withDescription("Sala cheia. Tente novamente mais tarde").asRuntimeException(); 
@@ -101,22 +114,18 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 		}
 	}
 	
-	public String defineCorPecas(HashMap<String, Jogador> listaJogadores, Jogador jogador) {
-		//inicializa a cor como nada
-		String corPecas = "";
-		
+	public String defineCorPecas(HashMap<String, Jogador> listaJogadores) {		
 		//inicializa o randomizador
 		Random randomizador = new Random();
 		
 		//não tem jogador no tabuleiro
-		if(listaJogadores.size() == 0) 
+		if(listaJogadores.size() == 0) {
 			//define aleatoriamente a cor
-			corPecas = randomizador.nextInt(2) == 0 ? "Brancas" : "Pretas";
-			//já tem um jogador
-		else if(listaJogadores.size() == 1) 
-			//define a cor por eliminação
-			corPecas = listaJogadores.values().iterator().next().getCorPecas().equals("Brancas") ? "Pretas" : "Brancas";
+			return randomizador.nextInt(2) == 0 ? "Brancas" : "Pretas";
+		} 
 		
-		return corPecas;
+		//já tem jogador
+		Map.Entry<String, Jogador> jogador = listaJogadores.entrySet().iterator().next();
+		return jogador.getValue().getCorPecas().equals("Brancas") ? "Pretas" : "Brancas";
 	}
 }
