@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import com.xadrez.models.Jogador;
 
+import io.grpc.Status;
+
 public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 	HashMap<String, Jogador> listaJogadores = new HashMap<>();
 	
@@ -15,6 +17,17 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 		//coleta de dados ao conectar
 		String id = request.getIdJogador();
 		String nome = request.getNomeJogador();
+		
+		//verifica se nome está vazio
+		if(nome.trim().isEmpty()) {
+			//cria a exceção para retornar erro
+			Throwable excecao = Status.INVALID_ARGUMENT.withDescription("Nome inválido, insira um nome diferente e tente novamente").asRuntimeException(); 
+			
+			//lança o erro ao usuário
+			responseObserver.onError(excecao);
+			//retorna para nao dar seguimento na função
+			return;
+		}
 		
 		//verifica se pode entrar no jogo
 		if(listaJogadores.size() < 2) {
@@ -68,9 +81,23 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 			
 				//fechar resposta
 				responseObserver.onCompleted();
+			} else {
+				//cria a exceção para retornar erro
+				Throwable excecao = Status.NOT_FOUND.withDescription("ID não encontrado. Tente reiniciar completamente a aplicação.").asRuntimeException(); 
+				
+				//lança o erro ao usuário
+				responseObserver.onError(excecao);
+				//retorna para nao dar seguimento na função
+				return;
 			}
 		} else {
+			//cria a exceção para retornar erro
+			Throwable excecao = Status.FAILED_PRECONDITION.withDescription("Sala cheia. Tente novamente mais tarde").asRuntimeException(); 
 			
+			//lança o erro ao usuário
+			responseObserver.onError(excecao);
+			//retorna para nao dar seguimento na função
+			return;
 		}
 	}
 	
