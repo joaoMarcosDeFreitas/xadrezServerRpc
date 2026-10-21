@@ -4,7 +4,6 @@ com\xadrez\grpc\ConectarResponse.class
 com\xadrez\grpc\JogadaRequest$1.class
 com\xadrez\grpc\XadrezServiceGrpc.class
 com\xadrez\grpc\XadrezServiceGrpc$AsyncService.class
-com\xadrez\models\Jogador.class
 com\xadrez\grpc\ConectarResponse$1.class
 com\xadrez\grpc\JogadaRequest.class
 com\xadrez\grpc\JogadaResponseOrBuilder.class
@@ -13,7 +12,6 @@ com\xadrez\grpc\XadrezServiceGrpc$1.class
 com\xadrez\grpc\XadrezServiceGrpc$XadrezServiceMethodDescriptorSupplier.class
 com\xadrez\grpc\XadrezServiceGrpc$XadrezServiceBaseDescriptorSupplier.class
 com\xadrez\grpc\ConectarResponse$Builder.class
-com\xadrez\grpc\XadrezServiceGrpc$4.class
 com\xadrez\grpc\XadrezServiceGrpc$2.class
 com\xadrez\grpc\JogadaRequestOrBuilder.class
 com\xadrez\grpc\EstadoRequest$1.class
@@ -21,13 +19,11 @@ com\xadrez\grpc\EstadoRequest.class
 com\xadrez\grpc\ConectarRequestOrBuilder.class
 com\xadrez\grpc\ConectarRequest$Builder.class
 com\xadrez\grpc\XadrezServiceGrpc$XadrezServiceStub.class
-com\xadrez\grpc\XadrezServiceGrpc$XadrezServiceBlockingV2Stub.class
 com\xadrez\grpc\JogadaResponse$1.class
 com\xadrez\grpc\EstadoResponse$1.class
 com\xadrez\grpc\EstadoResponse$Builder.class
 com\xadrez\grpc\JogadaResponse.class
 com\xadrez\grpc\XadrezServiceGrpc$XadrezServiceFutureStub.class
-com\xadrez\grpc\XadrezServiceImpl.class
 com\xadrez\grpc\EstadoResponseOrBuilder.class
 com\xadrez\grpc\JogadaRequest$Builder.class
 com\xadrez\grpc\XadrezServiceGrpc$MethodHandlers.class

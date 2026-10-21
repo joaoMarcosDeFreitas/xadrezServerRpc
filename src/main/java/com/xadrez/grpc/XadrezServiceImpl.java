@@ -132,8 +132,10 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 		return jogador.getValue().getCorPecas().equalsIgnoreCase("Brancas") ? "Pretas" : "Brancas";
 	}
 
+	//synchronized impede que seja acessado ao mesmo tempo. Tratando race condition
 	//método para computar as jogadas do jogador
-	public synchronized void jogada() {
+	@Override 
+	public synchronized void enviarJogada(JogadaRequest request, io.grpc.stub.StreamObserver<com.xadrez.grpc.JogadaResponse> responseObserver) {
 		
 	}
 }

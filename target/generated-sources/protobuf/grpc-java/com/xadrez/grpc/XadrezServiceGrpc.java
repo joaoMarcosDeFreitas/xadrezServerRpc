@@ -4,6 +4,9 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /**
  */
+@javax.annotation.Generated(
+    value = "by gRPC proto compiler (version 1.62.2)",
+    comments = "Source: xadrez.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class XadrezServiceGrpc {
 
@@ -120,21 +123,6 @@ public final class XadrezServiceGrpc {
   }
 
   /**
-   * Creates a new blocking-style stub that supports all types of calls on the service
-   */
-  public static XadrezServiceBlockingV2Stub newBlockingV2Stub(
-      io.grpc.Channel channel) {
-    io.grpc.stub.AbstractStub.StubFactory<XadrezServiceBlockingV2Stub> factory =
-      new io.grpc.stub.AbstractStub.StubFactory<XadrezServiceBlockingV2Stub>() {
-        @java.lang.Override
-        public XadrezServiceBlockingV2Stub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-          return new XadrezServiceBlockingV2Stub(channel, callOptions);
-        }
-      };
-    return XadrezServiceBlockingV2Stub.newStub(factory, channel);
-  }
-
-  /**
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
   public static XadrezServiceBlockingStub newBlockingStub(
@@ -244,44 +232,6 @@ public final class XadrezServiceGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service XadrezService.
-   */
-  public static final class XadrezServiceBlockingV2Stub
-      extends io.grpc.stub.AbstractBlockingStub<XadrezServiceBlockingV2Stub> {
-    private XadrezServiceBlockingV2Stub(
-        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-      super(channel, callOptions);
-    }
-
-    @java.lang.Override
-    protected XadrezServiceBlockingV2Stub build(
-        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-      return new XadrezServiceBlockingV2Stub(channel, callOptions);
-    }
-
-    /**
-     */
-    public com.xadrez.grpc.ConectarResponse conectarJogador(com.xadrez.grpc.ConectarRequest request) throws io.grpc.StatusException {
-      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
-          getChannel(), getConectarJogadorMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public com.xadrez.grpc.JogadaResponse enviarJogada(com.xadrez.grpc.JogadaRequest request) throws io.grpc.StatusException {
-      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
-          getChannel(), getEnviarJogadaMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public com.xadrez.grpc.EstadoResponse obterEstadoDoJogo(com.xadrez.grpc.EstadoRequest request) throws io.grpc.StatusException {
-      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
-          getChannel(), getObterEstadoDoJogoMethod(), getCallOptions(), request);
-    }
-  }
-
-  /**
-   * A stub to allow clients to do limited synchronous rpc calls to service XadrezService.
    */
   public static final class XadrezServiceBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<XadrezServiceBlockingStub> {

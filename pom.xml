@@ -6,12 +6,13 @@
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <grpc.version>1.84.0</grpc.version><!-- CURRENT_GRPC_VERSION -->
-    <protobuf.version>3.25.9</protobuf.version>
-    <protoc.version>3.25.9</protoc.version>
-    <!-- required for JDK 8 -->
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <!-- Versões oficiais e estáveis do gRPC e Protobuf -->
+    <grpc.version>1.62.2</grpc.version>
+    <protobuf.version>3.25.3</protobuf.version>
+    <protoc.version>3.25.3</protoc.version>
+    <!-- Configurado para rodar no JDK moderno -->
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
   </properties>
   
   <dependencyManagement>
@@ -49,10 +50,10 @@
       <artifactId>protobuf-java-util</artifactId>
       <version>${protobuf.version}</version>
     </dependency>
-    <dependency> <!-- Use newer version than in protobuf-java-util -->
+    <dependency>
       <groupId>com.google.j2objc</groupId>
       <artifactId>j2objc-annotations</artifactId>
-      <version>3.1</version>
+      <version>3.0.0</version>
     </dependency>
     <dependency>
       <groupId>io.grpc</groupId>
@@ -68,8 +69,13 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>4.4.0</version>
+      <version>4.11.0</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.annotation</groupId>
+      <artifactId>javax.annotation-api</artifactId>
+      <version>1.3.2</version>
     </dependency>
   </dependencies>
   
@@ -82,6 +88,18 @@
       </extension>
     </extensions>
     <plugins>
+      <!-- Plugin de compilação compatível com Java moderno -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <source>21</source>
+          <target>21</target>
+        </configuration>
+      </plugin>
+
+      <!-- Plugin gerador de stubs do gRPC -->
       <plugin>
         <groupId>org.xolstice.maven.plugins</groupId>
         <artifactId>protobuf-maven-plugin</artifactId>
@@ -100,38 +118,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.5.0</version>
-        <executions>
-          <execution>
-            <id>enforce</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <requireUpperBoundDeps/>
-              </rules>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <!-- gRPC uses java.util.ServiceLoader, which reads class names from
-        META-INF/services in jars. If you package your application as a "fat"
-        jar that includes dependencies, you need to make sure the packaging tool
-        concatenates duplicate files in META-INF/services. -->
-
-      <!-- If using maven-shade-plugin, use ServicesResourceTransformer, as
-        documented by maven-shade-plugin.
-        https://maven.apache.org/plugins/maven-shade-plugin/examples/resource-transformers.html#ServicesResourceTransformer -->
-
-      <!-- If using maven-assembly-plugin, you need to add the metaInf-services
-        handler to the descriptor, which requires making a copy of
-        jar-with-dependencies. -->
     </plugins>
   </build>
-  
 </project>
