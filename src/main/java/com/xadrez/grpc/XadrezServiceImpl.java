@@ -10,9 +10,11 @@ import com.xadrez.models.Jogador;
 import io.grpc.Status;
 
 public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
+	//lista de jogadores presentes quando o servidor está ativo
 	HashMap<String, Jogador> listaJogadores = new HashMap<>();
 	
 	//synchronized impede que seja acessado ao mesmo tempo. Tratando race condition
+	//método de conectar jogador na partida
 	@Override
 	public synchronized void conectarJogador(ConectarRequest request, io.grpc.stub.StreamObserver<com.xadrez.grpc.ConectarResponse> responseObserver) {
 		//coleta de dados ao conectar
@@ -41,7 +43,7 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 		
 		//verifica o nome do jogador para entender se é igual a outro
 		for(Map.Entry<String, Jogador> jogador : listaJogadores.entrySet()) {
-			if(!id.equals(jogador.getKey()) && nome.toLowerCase().equals(jogador.getValue().getNome())) {
+			if(!id.equalsIgnoreCase(jogador.getKey()) && nome.toLowerCase().equalsIgnoreCase(jogador.getValue().getNome().toLowerCase())) {
 				//cria a exceção para retornar erro
 				Throwable excecao = Status.INVALID_ARGUMENT.withDescription("Nome já está em uso, mude e tente novamente.").asRuntimeException(); 
 				
@@ -113,7 +115,8 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 			return;
 		}
 	}
-	
+
+	//método para definir qual cor de peça o jogador receberá
 	public String defineCorPecas(HashMap<String, Jogador> listaJogadores) {		
 		//inicializa o randomizador
 		Random randomizador = new Random();
@@ -126,6 +129,11 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 		
 		//já tem jogador
 		Map.Entry<String, Jogador> jogador = listaJogadores.entrySet().iterator().next();
-		return jogador.getValue().getCorPecas().equals("Brancas") ? "Pretas" : "Brancas";
+		return jogador.getValue().getCorPecas().equalsIgnoreCase("Brancas") ? "Pretas" : "Brancas";
+	}
+
+	//método para computar as jogadas do jogador
+	public synchronized void jogada() {
+		
 	}
 }
