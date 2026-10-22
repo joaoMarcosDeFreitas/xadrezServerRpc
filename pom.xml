@@ -14,6 +14,58 @@
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
   </properties>
+
+  <profiles>
+    <profile>
+      <id>protoc-windows</id>
+      <activation>
+        <os>
+          <family>windows</family>
+          <arch>amd64</arch>
+        </os>
+      </activation>
+      <properties>
+        <os.detected.classifier>windows-x86_64</os.detected.classifier>
+      </properties>
+    </profile>
+    <profile>
+      <id>protoc-linux</id>
+      <activation>
+        <os>
+          <family>unix</family>
+          <name>Linux</name>
+          <arch>amd64</arch>
+        </os>
+      </activation>
+      <properties>
+        <os.detected.classifier>linux-x86_64</os.detected.classifier>
+      </properties>
+    </profile>
+    <profile>
+      <id>protoc-mac-intel</id>
+      <activation>
+        <os>
+          <family>mac</family>
+          <arch>x86_64</arch>
+        </os>
+      </activation>
+      <properties>
+        <os.detected.classifier>osx-x86_64</os.detected.classifier>
+      </properties>
+    </profile>
+    <profile>
+      <id>protoc-mac-arm</id>
+      <activation>
+        <os>
+          <family>mac</family>
+          <arch>aarch64</arch>
+        </os>
+      </activation>
+      <properties>
+        <os.detected.classifier>osx-aarch_64</os.detected.classifier>
+      </properties>
+    </profile>
+  </profiles>
   
   <dependencyManagement>
     <dependencies>

@@ -1,6 +1,7 @@
 C:\Users\joaofreitas\Projetos\servidor-grpc\src\main\java\com\xadrez\grpc\XadrezServiceImpl.java
 C:\Users\joaofreitas\Projetos\servidor-grpc\src\main\java\com\xadrez\models\Jogada.java
 C:\Users\joaofreitas\Projetos\servidor-grpc\src\main\java\com\xadrez\models\Jogador.java
+C:\Users\joaofreitas\Projetos\servidor-grpc\src\main\java\com\xadrez\models\Partida.java
 C:\Users\joaofreitas\Projetos\servidor-grpc\target\generated-sources\protobuf\grpc-java\com\xadrez\grpc\XadrezServiceGrpc.java
 C:\Users\joaofreitas\Projetos\servidor-grpc\target\generated-sources\protobuf\java\com\xadrez\grpc\ConectarRequest.java
 C:\Users\joaofreitas\Projetos\servidor-grpc\target\generated-sources\protobuf\java\com\xadrez\grpc\ConectarRequestOrBuilder.java

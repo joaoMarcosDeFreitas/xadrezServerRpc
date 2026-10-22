@@ -3,10 +3,12 @@ package com.xadrez.models;
 public class Partida {
     private String idPartida;
     private String turno;
+	private String estadoDasala;
     
-	public Partida(String idPartida, String turno) {
+	public Partida(String idPartida, String turno, String estadoDaSala) {
 		this.idPartida = idPartida;
 		this.turno = turno;
+		this.estadoDasala = estadoDaSala;
 	}
 
 	public String getIdPartida() {
@@ -24,4 +26,6 @@ public class Partida {
 	public void setTurno(String turno) {
 		this.turno = turno;
 	}
+
+	
 }

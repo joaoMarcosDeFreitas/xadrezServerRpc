@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.google.gson.JsonObject;
 import com.xadrez.models.Jogador;
 
 import io.grpc.Status;
@@ -16,38 +17,36 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 	//método de conectar jogador na partida
 	@Override
 	public synchronized void conectarJogador(ConectarRequest request, io.grpc.stub.StreamObserver<com.xadrez.grpc.ConectarResponse> responseObserver) {
-		//coleta de dados ao conectar
-		String id = request.getIdJogador().trim();
-		String nome = request.getNomeJogador().trim();
-		
-		//verifica se nome está vazio
-		if(nome.isEmpty()) {
-			//cria a exceção para retornar erro
-			Throwable excecao = Status.INVALID_ARGUMENT.withDescription("Nome inválido, insira um nome válido e tente novamente.").asRuntimeException(); 
-			
-			//lança o erro ao usuário
-			responseObserver.onError(excecao);
-			//retorna para nao dar seguimento na função
-			return;
-		} //verifica o tamanho do nome
-		else if (nome.length() > 15) {
-			//cria a exceção para retornar erro
-			Throwable excecao = Status.INVALID_ARGUMENT.withDescription("Nome muito longo, insira um nome válido e tente novamente.").asRuntimeException(); 
-			
-			//lança o erro ao usuário
-			responseObserver.onError(excecao);
-			//retorna para nao dar seguimento na função
-			return;
-		} 
-		
+		//Cria o jogador para fazer as verificações com suas informações
+		//ID e nome são definidos pelo front. Aqui só valida e define a cor.
+		Jogador jogador = new Jogador(request.getIdJogador().trim(), request.getNomeJogador().trim(), null);
+
+		//verificações se a requisição foi válida (jogador criado está de acordo)
+		jogador.verificaId()
+
 		//verificar se jogador está na lista
-		if (listaJogadores.containsKey(id)) {	
+		if (listaJogadores.containsKey(jogador.getId())) {	
 			//busca o jogador na lista
-			Jogador jogador = listaJogadores.get(id);
+			jogador = listaJogadores.get(jogador.getId());
+
+			//inicializa um objeto JSON para receber a resposta da verificação do nome
+			JsonObject respostaVerificacao = jogador.verificaNome(listaJogadores, jogador);
+
+			if(respostaVerificacao.get("código").getAsInt() == 3) {
+				//cria a exceção para retornar erro
+				Throwable excecao = Status.INVALID_ARGUMENT.withDescription(respostaVerificacao.get("descrição").getAsString()).asRuntimeException(); 
+			
+				//lança o erro ao usuário
+				responseObserver.onError(excecao);
+				//retorna para nao dar seguimento na função
+				return;
+			}
+
+			//edita o nome do jogador para o que foi enviado agora
 			jogador.setNome(nome);
 			
 			//montar resposta
-			ConectarResponse resposta = ConectarResponse.newBuilder()
+			ConectarResponse respostaServer = ConectarResponse.newBuilder()
 				.setIdJogador(jogador.getId())
 				.setNomeJogador(jogador.getNome())
 				.setCorPecas(jogador.getCorPecas())
@@ -55,7 +54,7 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 				.build();
 			
 			//enviar resposta
-			responseObserver.onNext(resposta);
+			responseObserver.onNext(respostaServer);
 		
 			//fechar resposta
 			responseObserver.onCompleted();
@@ -63,21 +62,7 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 			return;
 		}
 		 
-		//verifica se tem jogador no tabuleiro
-		if(listaJogadores.size() == 1) {
-			//já tem jogador
-			//verifica se jogador botou o mesmo nome que o outro
-			Map.Entry<String, Jogador> jogador = listaJogadores.entrySet().iterator().next();
-			if(!id.equalsIgnoreCase(jogador.getKey()) && nome.toLowerCase().equalsIgnoreCase(jogador.getValue().getNome().toLowerCase())) {
-				//cria a exceção para retornar erro
-				Throwable excecao = Status.INVALID_ARGUMENT.withDescription("Nome já está em uso, mude e tente novamente.").asRuntimeException(); 
-				
-				//lança o erro ao usuário
-				responseObserver.onError(excecao);
-				//retorna para nao dar seguimento na função
-				return;
-			}
-		}
+		
 
 		//verifica se pode entrar no jogo
 		if(listaJogadores.size() < 2) {
@@ -107,7 +92,11 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 			responseObserver.onCompleted();
 			//retorna para evitar que siga o código
 			return;
-		} else {
+		} //se o jogador foi o 2° a entrar registra e começa o jogo
+		else if() {
+
+		} //tentou entrar em sala cheia
+		else {
 			//cria a exceção para retornar erro
 			Throwable excecao = Status.FAILED_PRECONDITION.withDescription("Sala cheia. Tente novamente mais tarde").asRuntimeException(); 
 			
@@ -135,7 +124,7 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 		//coleta o jogador que mandou a jogada
 		Jogador jogador = listaJogadores.get(request.getIdJogador().trim());
 
-		//verifia se o jogador foi encontrado
+		//verifica se o jogador foi encontrado
 		if(jogador == null) {
 			//cria a exceção para retornar erro
 			Throwable excecao = Status.INVALID_ARGUMENT.withDescription("ID não encontrado. Não é possível realizar uma jogada sem jogador.").asRuntimeException(); 
@@ -145,6 +134,7 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 			//retorna para nao dar seguimento na função
 			return;
 		}
-
+		
+		//veriica se solicitou de uma partida existente
 	}
 }
