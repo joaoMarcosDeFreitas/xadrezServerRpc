@@ -19,8 +19,9 @@ message ConectarRequest {
 
 message ConectarResponse {
 	string idJogador = 1;
-	string corPecas = 2;
+	string idPartida = 2;
 	string nomeJogador = 3;
+	string corPecas = 4;
 }
 
 message JogadaRequest {

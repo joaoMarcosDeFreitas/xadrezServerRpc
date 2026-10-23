@@ -22,7 +22,7 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 		if(jogador.verificaNome().get("código").getAsInt() == 3) 
 			responderServidorErro(responseObserver, jogador.verificaNome().get("descrição").getAsString());
 		
-		//após verificações sobre o jogador, é hora de verificar a partida
+		//após verificações sobre o jogador, é hora de verificar a partida (se está livre para entrada de jogadores, qual cor o jogador vai receber e se está reconectando)
 		
 	}
 	

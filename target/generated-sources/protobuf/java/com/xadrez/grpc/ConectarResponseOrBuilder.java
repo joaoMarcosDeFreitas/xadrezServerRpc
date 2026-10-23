@@ -21,16 +21,16 @@ public interface ConectarResponseOrBuilder extends
       getIdJogadorBytes();
 
   /**
-   * <code>string corPecas = 2;</code>
-   * @return The corPecas.
+   * <code>string idPartida = 2;</code>
+   * @return The idPartida.
    */
-  java.lang.String getCorPecas();
+  java.lang.String getIdPartida();
   /**
-   * <code>string corPecas = 2;</code>
-   * @return The bytes for corPecas.
+   * <code>string idPartida = 2;</code>
+   * @return The bytes for idPartida.
    */
   com.google.protobuf.ByteString
-      getCorPecasBytes();
+      getIdPartidaBytes();
 
   /**
    * <code>string nomeJogador = 3;</code>
@@ -43,4 +43,16 @@ public interface ConectarResponseOrBuilder extends
    */
   com.google.protobuf.ByteString
       getNomeJogadorBytes();
+
+  /**
+   * <code>string corPecas = 4;</code>
+   * @return The corPecas.
+   */
+  java.lang.String getCorPecas();
+  /**
+   * <code>string corPecas = 4;</code>
+   * @return The bytes for corPecas.
+   */
+  com.google.protobuf.ByteString
+      getCorPecasBytes();
 }
