@@ -19,7 +19,6 @@ private static final long serialVersionUID = 0L;
   private ConectarResponse() {
     idJogador_ = "";
     corPecas_ = "";
-    status_ = "";
     nomeJogador_ = "";
   }
 
@@ -121,50 +120,11 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int STATUS_FIELD_NUMBER = 3;
-  @SuppressWarnings("serial")
-  private volatile java.lang.Object status_ = "";
-  /**
-   * <code>string status = 3;</code>
-   * @return The status.
-   */
-  @java.lang.Override
-  public java.lang.String getStatus() {
-    java.lang.Object ref = status_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      status_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string status = 3;</code>
-   * @return The bytes for status.
-   */
-  @java.lang.Override
-  public com.google.protobuf.ByteString
-      getStatusBytes() {
-    java.lang.Object ref = status_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      status_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int NOMEJOGADOR_FIELD_NUMBER = 4;
+  public static final int NOMEJOGADOR_FIELD_NUMBER = 3;
   @SuppressWarnings("serial")
   private volatile java.lang.Object nomeJogador_ = "";
   /**
-   * <code>string nomeJogador = 4;</code>
+   * <code>string nomeJogador = 3;</code>
    * @return The nomeJogador.
    */
   @java.lang.Override
@@ -181,7 +141,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string nomeJogador = 4;</code>
+   * <code>string nomeJogador = 3;</code>
    * @return The bytes for nomeJogador.
    */
   @java.lang.Override
@@ -219,11 +179,8 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(corPecas_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, corPecas_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(status_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, status_);
-    }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nomeJogador_)) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, nomeJogador_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, nomeJogador_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -240,11 +197,8 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(corPecas_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, corPecas_);
     }
-    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(status_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, status_);
-    }
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nomeJogador_)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, nomeJogador_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, nomeJogador_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -265,8 +219,6 @@ private static final long serialVersionUID = 0L;
         .equals(other.getIdJogador())) return false;
     if (!getCorPecas()
         .equals(other.getCorPecas())) return false;
-    if (!getStatus()
-        .equals(other.getStatus())) return false;
     if (!getNomeJogador()
         .equals(other.getNomeJogador())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -284,8 +236,6 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getIdJogador().hashCode();
     hash = (37 * hash) + CORPECAS_FIELD_NUMBER;
     hash = (53 * hash) + getCorPecas().hashCode();
-    hash = (37 * hash) + STATUS_FIELD_NUMBER;
-    hash = (53 * hash) + getStatus().hashCode();
     hash = (37 * hash) + NOMEJOGADOR_FIELD_NUMBER;
     hash = (53 * hash) + getNomeJogador().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
@@ -421,7 +371,6 @@ private static final long serialVersionUID = 0L;
       bitField0_ = 0;
       idJogador_ = "";
       corPecas_ = "";
-      status_ = "";
       nomeJogador_ = "";
       return this;
     }
@@ -463,9 +412,6 @@ private static final long serialVersionUID = 0L;
         result.corPecas_ = corPecas_;
       }
       if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.status_ = status_;
-      }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
         result.nomeJogador_ = nomeJogador_;
       }
     }
@@ -524,14 +470,9 @@ private static final long serialVersionUID = 0L;
         bitField0_ |= 0x00000002;
         onChanged();
       }
-      if (!other.getStatus().isEmpty()) {
-        status_ = other.status_;
-        bitField0_ |= 0x00000004;
-        onChanged();
-      }
       if (!other.getNomeJogador().isEmpty()) {
         nomeJogador_ = other.nomeJogador_;
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -571,15 +512,10 @@ private static final long serialVersionUID = 0L;
               break;
             } // case 18
             case 26: {
-              status_ = input.readStringRequireUtf8();
+              nomeJogador_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000004;
               break;
             } // case 26
-            case 34: {
-              nomeJogador_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000008;
-              break;
-            } // case 34
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -741,81 +677,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object status_ = "";
-    /**
-     * <code>string status = 3;</code>
-     * @return The status.
-     */
-    public java.lang.String getStatus() {
-      java.lang.Object ref = status_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        status_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string status = 3;</code>
-     * @return The bytes for status.
-     */
-    public com.google.protobuf.ByteString
-        getStatusBytes() {
-      java.lang.Object ref = status_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        status_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string status = 3;</code>
-     * @param value The status to set.
-     * @return This builder for chaining.
-     */
-    public Builder setStatus(
-        java.lang.String value) {
-      if (value == null) { throw new NullPointerException(); }
-      status_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string status = 3;</code>
-     * @return This builder for chaining.
-     */
-    public Builder clearStatus() {
-      status_ = getDefaultInstance().getStatus();
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string status = 3;</code>
-     * @param value The bytes for status to set.
-     * @return This builder for chaining.
-     */
-    public Builder setStatusBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) { throw new NullPointerException(); }
-      checkByteStringIsUtf8(value);
-      status_ = value;
-      bitField0_ |= 0x00000004;
-      onChanged();
-      return this;
-    }
-
     private java.lang.Object nomeJogador_ = "";
     /**
-     * <code>string nomeJogador = 4;</code>
+     * <code>string nomeJogador = 3;</code>
      * @return The nomeJogador.
      */
     public java.lang.String getNomeJogador() {
@@ -831,7 +695,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string nomeJogador = 4;</code>
+     * <code>string nomeJogador = 3;</code>
      * @return The bytes for nomeJogador.
      */
     public com.google.protobuf.ByteString
@@ -848,7 +712,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string nomeJogador = 4;</code>
+     * <code>string nomeJogador = 3;</code>
      * @param value The nomeJogador to set.
      * @return This builder for chaining.
      */
@@ -856,22 +720,22 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       nomeJogador_ = value;
-      bitField0_ |= 0x00000008;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
     /**
-     * <code>string nomeJogador = 4;</code>
+     * <code>string nomeJogador = 3;</code>
      * @return This builder for chaining.
      */
     public Builder clearNomeJogador() {
       nomeJogador_ = getDefaultInstance().getNomeJogador();
-      bitField0_ = (bitField0_ & ~0x00000008);
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
     /**
-     * <code>string nomeJogador = 4;</code>
+     * <code>string nomeJogador = 3;</code>
      * @param value The bytes for nomeJogador to set.
      * @return This builder for chaining.
      */
@@ -880,7 +744,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       nomeJogador_ = value;
-      bitField0_ |= 0x00000008;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }

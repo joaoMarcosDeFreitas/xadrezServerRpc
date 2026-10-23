@@ -33,24 +33,12 @@ public interface ConectarResponseOrBuilder extends
       getCorPecasBytes();
 
   /**
-   * <code>string status = 3;</code>
-   * @return The status.
-   */
-  java.lang.String getStatus();
-  /**
-   * <code>string status = 3;</code>
-   * @return The bytes for status.
-   */
-  com.google.protobuf.ByteString
-      getStatusBytes();
-
-  /**
-   * <code>string nomeJogador = 4;</code>
+   * <code>string nomeJogador = 3;</code>
    * @return The nomeJogador.
    */
   java.lang.String getNomeJogador();
   /**
-   * <code>string nomeJogador = 4;</code>
+   * <code>string nomeJogador = 3;</code>
    * @return The bytes for nomeJogador.
    */
   com.google.protobuf.ByteString

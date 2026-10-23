@@ -55,22 +55,22 @@ public final class XadrezProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\014xadrez.proto\"9\n\017ConectarRequest\022\021\n\tidJ" +
-      "ogador\030\001 \001(\t\022\023\n\013nomeJogador\030\002 \001(\t\"\\\n\020Con" +
+      "ogador\030\001 \001(\t\022\023\n\013nomeJogador\030\002 \001(\t\"L\n\020Con" +
       "ectarResponse\022\021\n\tidJogador\030\001 \001(\t\022\020\n\010corP" +
-      "ecas\030\002 \001(\t\022\016\n\006status\030\003 \001(\t\022\023\n\013nomeJogado" +
-      "r\030\004 \001(\t\"d\n\rJogadaRequest\022\021\n\tidJogador\030\001 " +
-      "\001(\t\022\021\n\tidPartida\030\002 \001(\t\022\025\n\rposicaoOrigem\030" +
-      "\003 \001(\t\022\026\n\016posicaoDestino\030\004 \001(\t\"?\n\016JogadaR" +
-      "esponse\022\024\n\014jogadaValida\030\001 \001(\010\022\027\n\017mensage" +
-      "mRetorno\030\002 \001(\t\"\"\n\rEstadoRequest\022\021\n\tidPar" +
-      "tida\030\001 \001(\t\"N\n\016EstadoResponse\022\024\n\014posicaoP" +
-      "ecas\030\001 \001(\t\022\022\n\nturnoAtual\030\002 \001(\t\022\022\n\nestado" +
-      "Jogo\030\003 \001(\t2\264\001\n\rXadrezService\0228\n\017Conectar" +
-      "Jogador\022\020.ConectarRequest\032\021.ConectarResp" +
-      "onse\"\000\0221\n\014EnviarJogada\022\016.JogadaRequest\032\017" +
-      ".JogadaResponse\"\000\0226\n\021ObterEstadoDoJogo\022\016" +
-      ".EstadoRequest\032\017.EstadoResponse\"\000B \n\017com" +
-      ".xadrez.grpcB\013XadrezProtoP\001b\006proto3"
+      "ecas\030\002 \001(\t\022\023\n\013nomeJogador\030\003 \001(\t\"d\n\rJogad" +
+      "aRequest\022\021\n\tidJogador\030\001 \001(\t\022\021\n\tidPartida" +
+      "\030\002 \001(\t\022\025\n\rposicaoOrigem\030\003 \001(\t\022\026\n\016posicao" +
+      "Destino\030\004 \001(\t\"?\n\016JogadaResponse\022\024\n\014jogad" +
+      "aValida\030\001 \001(\010\022\027\n\017mensagemRetorno\030\002 \001(\t\"\"" +
+      "\n\rEstadoRequest\022\021\n\tidPartida\030\001 \001(\t\"N\n\016Es" +
+      "tadoResponse\022\024\n\014posicaoPecas\030\001 \001(\t\022\022\n\ntu" +
+      "rnoAtual\030\002 \001(\t\022\022\n\nestadoJogo\030\003 \001(\t2\264\001\n\rX" +
+      "adrezService\0228\n\017ConectarJogador\022\020.Conect" +
+      "arRequest\032\021.ConectarResponse\"\000\0221\n\014Enviar" +
+      "Jogada\022\016.JogadaRequest\032\017.JogadaResponse\"" +
+      "\000\0226\n\021ObterEstadoDoJogo\022\016.EstadoRequest\032\017" +
+      ".EstadoResponse\"\000B \n\017com.xadrez.grpcB\013Xa" +
+      "drezProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -87,7 +87,7 @@ public final class XadrezProto {
     internal_static_ConectarResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ConectarResponse_descriptor,
-        new java.lang.String[] { "IdJogador", "CorPecas", "Status", "NomeJogador", });
+        new java.lang.String[] { "IdJogador", "CorPecas", "NomeJogador", });
     internal_static_JogadaRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_JogadaRequest_fieldAccessorTable = new

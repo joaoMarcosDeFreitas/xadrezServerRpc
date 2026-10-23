@@ -1,14 +1,17 @@
 package com.xadrez.models;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 public class Partida {
     private String idPartida;
-    private String turno;
-	private String estadoDasala;
+	private enum CorPecas {
+		BRANCAS, PRETAS
+	}
+	public final Map<CorPecas, String> corPecasJogadores = new EnumMap<>(CorPecas.class);
     
-	public Partida(String idPartida, String turno, String estadoDaSala) {
+	public Partida(String idPartida) {
 		this.idPartida = idPartida;
-		this.turno = turno;
-		this.estadoDasala = estadoDaSala;
 	}
 
 	public String getIdPartida() {
@@ -19,13 +22,11 @@ public class Partida {
 		this.idPartida = idPartida;
 	}
 
-	public String getTurno() {
-		return turno;
+	public Map<CorPecas, String> getCorPecasJogadores() {
+		return corPecasJogadores;
 	}
 
-	public void setTurno(String turno) {
-		this.turno = turno;
+	public void adicionarCorPecasJogadores(String idJogador) {
+		
 	}
-
-	
 }
