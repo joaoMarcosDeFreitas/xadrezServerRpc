@@ -8,10 +8,10 @@ import com.google.gson.JsonObject;
 
 public class Partida {
     private String idPartida;
-	private enum CorPecas {
+	public enum CorPecas {
 		BRANCAS, PRETAS
 	}
-	public final Map<CorPecas, String> corPecasJogadores = new EnumMap<>(CorPecas.class);
+	private final Map<CorPecas, Jogador> jogadores = new EnumMap<>(CorPecas.class);
     
 	public Partida(String idPartida) {
 		this.idPartida = idPartida;
@@ -25,32 +25,57 @@ public class Partida {
 		this.idPartida = idPartida;
 	}
 
-	//buscar o mapa de jogadores através das cores (brancas e pretas)
-	public Map<CorPecas, String> getCorPecasJogadores() {
-		return corPecasJogadores;
-	}
-
 	//verifica se já tem 2 jogadores
-	public Boolean verificaSeJogoEstaCheio() {
-		return corPecasJogadores.size() == 2;
+	public JsonObject verificaSeJogoEstaCheio() {
+		if(jogadores.size() == 2) {
+			//cria um JSON para montar a resposta (informar ao código principal que está inválido)
+			return montaRespotaJsonObject("9", "Jogo está cheio! Tente novamente mais tarde");
+		}
+		
+		//cria um JSON para montar a resposta (informar ao código principal que está inválido)
+		return montaRespotaJsonObject("0", "Sucesso! Nome válido!");
 	}
 
 	//verifica qual cor está disponível
 	public ArrayList<CorPecas> corDisponivel() {
+		//cria um array de CorPecas para armazenas os disponíveis
 		ArrayList<CorPecas> listaDeDisponibilidade = new ArrayList<>();
-
+		//looping para preencher quais são as cores disponíveis (as duas ou só uma)
 		for(CorPecas cor : CorPecas.values()) {
-			if(!corPecasJogadores.containsKey(cor)) {
+			if(!jogadores.containsKey(cor)) {
 				listaDeDisponibilidade.add(cor);
 			}
 		}
-
 		return listaDeDisponibilidade;
 	}
-
+	
 	//adiciona um jogador ao jogo
-	public void adicionarCorPecasJogadores(String idJogador) {
-		
+	public JsonObject adicionarCorPecasJogadores(CorPecas cor, Jogador jogadorParaAdicionar) {
+		//percorre a lista de jogadores 
+		for(Jogador jogador : jogadores.values()) {
+			//verifica se é um jogador diferente do que já está na lista
+			if(!jogador.getId().equals(jogadorParaAdicionar.getId())) {
+				//adiciona a cor e o jogador ao mapa de jogadores
+				this.jogadores.put(cor, jogadorParaAdicionar);
+				//retorna a mensagem de sucesso (apenas por prática, não é mostrada)
+				return montaRespotaJsonObject("0", "Sucesso! Jogador adicionado ao jogo");
+			}
+		}
+		//cria um JSON para montar a resposta (informar ao código principal que está inválido)
+		return montaRespotaJsonObject("9", "Erro! Jogador já está presente no jogo.");
+	}
+	
+	//pega a lista de jogadores que está presente
+	public ArrayList<Jogador> listaJogadores() {
+		//inicia o array de jogadores
+		ArrayList<Jogador> jogadoresNaLista = new ArrayList<>();
+		//percorre a lista de jogadores
+		for(Jogador jogador : jogadores.values()) {
+			//adiciona no array de jogadores os jogadores na lista
+			jogadoresNaLista.add(jogador);
+		}
+		//retorna os jogadores
+		return jogadoresNaLista;
 	}
 
 	//método para montar a resposta em JSON que é enviada ao IMPL

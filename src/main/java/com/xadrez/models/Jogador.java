@@ -1,5 +1,7 @@
 package com.xadrez.models;
 
+import java.util.ArrayList;
+
 import com.google.gson.JsonObject;
 
 public class Jogador {
@@ -28,23 +30,19 @@ public class Jogador {
 		this.nome = nome;
 	}
 
-	//método para verificar se o ID atende as regras
-	public JsonObject verificaId() {
-		//verifica se ID está vazio
-		if(id.isBlank()) {
-			//retorna o erro ao código principal
-			return montaRespotaJsonObject("3", "Nome inválido, insira um nome válido e tente novamente.");
-		}
-		
-		return montaRespotaJsonObject("0", "Sucesso! ID válido.");
-	}
-
 	//método para verificar se o nome atende as regras
-	public JsonObject verificaNome() {
+	public JsonObject verificaNome(ArrayList<Jogador> jogadores) {
 		//verifica se nome está vazio
 		if(this.nome.isEmpty() || (this.nome.length() > 15 || this.nome.length() < 3)) {
-			//retorna o erro ao código principal
-			return montaRespotaJsonObject("3", "Nome inválido, insira um nome válido e tente novamente. Nome deve ser maior que 3 carácteres, menor que 15 e não pode estar vazio.");
+			//cria um JSON para montar a resposta (informar ao código principal que está inválido)
+			return montaRespotaJsonObject("9", "Nome inválido, insira um nome válido e tente novamente. Nome deve ser maior que 3 carácteres, menor que 15 e não pode estar vazio.");
+		}
+		
+		for(Jogador jogador : jogadores) {
+			if(this.nome.equals(jogador.getNome())) {
+				//cria um JSON para montar a resposta (informar ao código principal que está inválido)
+				return montaRespotaJsonObject("9", "Nome inválido! Nome deve ser único.");
+			}
 		}
 		
 		//cria um JSON para montar a resposta (informar ao código principal que está inválido)
