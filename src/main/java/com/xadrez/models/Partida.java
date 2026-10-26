@@ -51,18 +51,10 @@ public class Partida {
 	
 	//adiciona um jogador ao jogo
 	public JsonObject adicionarCorPecasJogadores(CorPecas cor, Jogador jogadorParaAdicionar) {
-		//percorre a lista de jogadores 
-		for(Jogador jogador : jogadores.values()) {
-			//verifica se é um jogador diferente do que já está na lista
-			if(!jogador.getId().equals(jogadorParaAdicionar.getId())) {
-				//adiciona a cor e o jogador ao mapa de jogadores
-				this.jogadores.put(cor, jogadorParaAdicionar);
-				//retorna a mensagem de sucesso (apenas por prática, não é mostrada)
-				return montaRespotaJsonObject("0", "Sucesso! Jogador adicionado ao jogo");
-			}
-		}
-		//cria um JSON para montar a resposta (informar ao código principal que está inválido)
-		return montaRespotaJsonObject("9", "Erro! Jogador já está presente no jogo.");
+		//adiciona a cor e o jogador ao mapa de jogadores
+		this.jogadores.put(cor, jogadorParaAdicionar);
+		//retorna a mensagem de sucesso (apenas por prática, não é mostrada)
+		return montaRespotaJsonObject("0", "Sucesso! Jogador adicionado ao jogo");            
 	}
 	
 	//pega a lista de jogadores que está presente

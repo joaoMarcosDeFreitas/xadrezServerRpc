@@ -59,8 +59,6 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 		}
 		//Adiciona a cor ao jogador, sempre com índice 0 para garantir que pega sempre o primeiro. (Quem entra primeiro sempre é branca)
 		partida.adicionarCorPecasJogadores(coresDisponiveis.get(0), jogador);
-		
-		
 	}
 	
 	//método para responder o servidor com erro. (REFERENTE A CONEXÃO DE JOGADOR)
