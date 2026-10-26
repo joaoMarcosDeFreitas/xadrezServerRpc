@@ -39,6 +39,15 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 				request.getNomeJogador().trim()
 		);
 		
+		//verifica se jogador já entrou anteriormente na partida
+		JsonObject verificaSeJogadorJaEntrou = partida.verificaSeJogadorEntrou(jogador);
+		if(verificaSeJogadorJaEntrou.get("código").getAsString().equals("9")) {
+			//utiliza o método para retornar erro ao servidor
+			responderServidorErroConectarJogador(responseObserver, verificaSeJogadorJaEntrou.get("código").getAsString(), verificaSeJogadorJaEntrou.get("descrição").getAsString());
+			//return para parar o código
+			return;
+		}
+		
 		//verifica se o nome passado está válido (não é vazio e tem tamanho adequado)
 		JsonObject verificaNome = jogador.verificaNome(partida.listaJogadores());
 		if(verificaNome.get("código").getAsString().equals("3")) {
@@ -52,14 +61,7 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 		ArrayList<Partida.CorPecas> coresDisponiveis = partida.corDisponivel();
 		//Adiciona a cor ao jogador, sempre com índice 0 para garantir que pega sempre o primeiro. (Quem entra primeiro sempre é branca)
 		Partida.CorPecas corPecaEscolhida = coresDisponiveis.get(0);
-		JsonObject verificaInsercaoJogador = partida.adicionarCorPecasJogadores(corPecaEscolhida, jogador);
-		if(verificaInsercaoJogador.get("código").getAsString().equals("9")) {
-			//utiliza o método para retornar erro ao servidor
-			responderServidorErroConectarJogador(responseObserver, verificaInsercaoJogador.get("código").getAsString(), verificaInsercaoJogador.get("descrição").getAsString());
-			//return para parar o código
-			return;
-		}
-		
+		partida.adicionarCorPecasJogadores(corPecaEscolhida, jogador);
 		//utiliza o método para retornar sucesso ao servidor
 		responderServidorSucessoConectarJogador(responseObserver, jogador, corPecaEscolhida);
 		//return para parar o código
