@@ -3,6 +3,7 @@ package com.xadrez.models;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
+import com.xadrez.utils.*;
 
 import com.google.gson.JsonObject;
 
@@ -29,11 +30,11 @@ public class Partida {
 	public JsonObject verificaSeJogoEstaCheio() {
 		if(jogadores.size() == 2) {
 			//cria um JSON para montar a resposta (informar ao código principal que está inválido)
-			return montaRespotaJsonObject("9", "Jogo está cheio! Tente novamente mais tarde");
+			return Utils.montaRespotaJsonObject("9", "Jogo está cheio! Tente novamente mais tarde");
 		}
 		
 		//cria um JSON para montar a resposta (informar ao código principal que está inválido)
-		return montaRespotaJsonObject("0", "Sucesso! Nome válido!");
+		return Utils.montaRespotaJsonObject("0", "Sucesso! Sala tem vaga!");
 	}
 
 	//verifica qual cor está disponível
@@ -51,10 +52,15 @@ public class Partida {
 	
 	//adiciona um jogador ao jogo
 	public JsonObject adicionarCorPecasJogadores(CorPecas cor, Jogador jogadorParaAdicionar) {
+		//verifica se é o mesmo jogador enviado de novo
+		for(Jogador jogador : jogadores.values()) 
+			if(jogadorParaAdicionar.getId().equals(jogador.getId()))
+				return Utils.montaRespotaJsonObject("9", "Jogador já entrou no jogo. Aguarde seu oponente!");
+		
 		//adiciona a cor e o jogador ao mapa de jogadores
 		this.jogadores.put(cor, jogadorParaAdicionar);
 		//retorna a mensagem de sucesso (apenas por prática, não é mostrada)
-		return montaRespotaJsonObject("0", "Sucesso! Jogador adicionado ao jogo");            
+		return Utils.montaRespotaJsonObject("0", "Sucesso! Jogador adicionado ao jogo");
 	}
 	
 	//pega a lista de jogadores que está presente
@@ -68,18 +74,5 @@ public class Partida {
 		}
 		//retorna os jogadores
 		return jogadoresNaLista;
-	}
-
-	//método para montar a resposta em JSON que é enviada ao IMPL
-	public JsonObject montaRespotaJsonObject(String codigo, String descricao) {
-		//cria um JSON para montar a resposta (informar ao código principal que está inválido)
-		JsonObject resposta = new JsonObject();
-
-		//adiciona no JSON as chaves de código de erro e descrição
-		resposta.addProperty("código", codigo);
-		resposta.addProperty("descrição", descricao);
-			
-		//retorna o erro ao código principal
-		return resposta;
 	}
 }

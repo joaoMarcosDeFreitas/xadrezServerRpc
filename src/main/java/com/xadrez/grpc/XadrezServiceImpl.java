@@ -13,9 +13,11 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 	//O synchronized durante todos os métodos que comunicam com o servidor (recebendo ou enviando dados) servem para não permitir que duas chamadas ocorram simultâneamente. Dessa forma, ele impede o race condition.
 	
 	//inicia a partida assim que o servidor liga
-	Partida partida = new Partida(UUID.randomUUID().toString());
+	private final Partida partida = new Partida(UUID.randomUUID().toString());
 	
-	//método de conectar jogador na partida
+	//INICIO DOS MÉTODOS DE CONEXÃO DO JOGADOR
+	
+	//método de conectar jogador com o que vier do grpc
 	@Override
 	public synchronized void conectarJogador(ConectarRequest request, io.grpc.stub.StreamObserver<com.xadrez.grpc.ConectarResponse> responseObserver) {
 		//verificações da partida (se está livre para entrada de jogadores e quais cores estão livres -> assim define quantos jogadores tem em sala)
@@ -24,7 +26,7 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 		JsonObject verificaSeJogoEstaCheio = partida.verificaSeJogoEstaCheio();
 		if(verificaSeJogoEstaCheio.get("código").getAsString().equals("9")) {
 			//utiliza o método para retornar erro ao servidor
-			responderServidorErro(responseObserver, verificaSeJogoEstaCheio.get("código").getAsString(), verificaSeJogoEstaCheio.get("descrição").getAsString());
+			responderServidorErroConectarJogador(responseObserver, verificaSeJogoEstaCheio.get("código").getAsString(), verificaSeJogoEstaCheio.get("descrição").getAsString());
 			//return para parar o código
 			return;
 		}
@@ -39,30 +41,33 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 		
 		//verifica se o nome passado está válido (não é vazio e tem tamanho adequado)
 		JsonObject verificaNome = jogador.verificaNome(partida.listaJogadores());
-		if(verificaNome.get("código").getAsString().equals("9")) {
+		if(verificaNome.get("código").getAsString().equals("3")) {
 			//utiliza o método para retornar erro ao servidor
-			responderServidorErro(responseObserver, verificaNome.get("código").getAsString(), verificaNome.get("descrição").getAsString());
+			responderServidorErroConectarJogador(responseObserver, verificaNome.get("código").getAsString(), verificaNome.get("descrição").getAsString());
 			//return para parar o código
 			return;
 		}
-		//verifica se o nome não está repetido
-			
 		
 		//verifica cores disponíveis no jogo. Aqui é definido quantas vagas sobraram
 		ArrayList<Partida.CorPecas> coresDisponiveis = partida.corDisponivel();
-		//verificação de precaução mesmo que o jogo tenha vindo como não cheio acima
-		if(coresDisponiveis.isEmpty()) {
+		//Adiciona a cor ao jogador, sempre com índice 0 para garantir que pega sempre o primeiro. (Quem entra primeiro sempre é branca)
+		Partida.CorPecas corPecaEscolhida = coresDisponiveis.get(0);
+		JsonObject verificaInsercaoJogador = partida.adicionarCorPecasJogadores(corPecaEscolhida, jogador);
+		if(verificaInsercaoJogador.get("código").getAsString().equals("9")) {
 			//utiliza o método para retornar erro ao servidor
-			responderServidorErro(responseObserver, "9", "Jogo está cheio! Tente novamente mais tarde");
+			responderServidorErroConectarJogador(responseObserver, verificaInsercaoJogador.get("código").getAsString(), verificaInsercaoJogador.get("descrição").getAsString());
 			//return para parar o código
 			return;
 		}
-		//Adiciona a cor ao jogador, sempre com índice 0 para garantir que pega sempre o primeiro. (Quem entra primeiro sempre é branca)
-		partida.adicionarCorPecasJogadores(coresDisponiveis.get(0), jogador);
+		
+		//utiliza o método para retornar sucesso ao servidor
+		responderServidorSucessoConectarJogador(responseObserver, jogador, corPecaEscolhida);
+		//return para parar o código
+		return;
 	}
 	
 	//método para responder o servidor com erro. (REFERENTE A CONEXÃO DE JOGADOR)
-	public void responderServidorErro(io.grpc.stub.StreamObserver<com.xadrez.grpc.ConectarResponse> responseObserver, String codigo, String descricao) {
+	public void responderServidorErroConectarJogador(io.grpc.stub.StreamObserver<com.xadrez.grpc.ConectarResponse> responseObserver, String codigo, String descricao) {
 		//inicia a exceção que será jogada ao usuário (para saber porque não funcionou)
 		Throwable excecao;
 		//switch para definir qual código foi usado.
@@ -71,21 +76,36 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 				//cria a exceção para retornar erro
 				excecao = Status.FAILED_PRECONDITION.withDescription(descricao).asRuntimeException(); 
 				break;
+			case "3":
+				//cria a exceção para retornar erro
+				excecao = Status.INVALID_ARGUMENT.withDescription(descricao).asRuntimeException(); 
+				break;
 			default:
 				//cria a exceção para retornar erro
 				excecao = Status.UNKNOWN.withDescription(descricao).asRuntimeException(); 
 		}
 		//lança o erro ao usuário
 		responseObserver.onError(excecao);
-		//retorna para terminar a resposta
-		return;
 	}
 		
 	//método para responder o servidor com sucesso. (REFERENTE A CONEXÃO DE JOGADOR)
-	public void responderServidorSucesso(io.grpc.stub.StreamObserver<com.xadrez.grpc.ConectarResponse> responseObserver, String descricao) {
-		
+	public void responderServidorSucessoConectarJogador(io.grpc.stub.StreamObserver<com.xadrez.grpc.ConectarResponse> responseObserver, Jogador jogador, Partida.CorPecas corPecaEscolhida) {
+		//monta a mensagem de sucesso ao servidor
+		ConectarResponse mensagem = ConectarResponse.newBuilder()
+				.setIdJogador(jogador.getId())
+				.setIdPartida(partida.getIdPartida())
+				.setNomeJogador(jogador.getNome())
+				.setCorPecas(corPecaEscolhida.toString())
+				.build();
+				
+		//envia a mensagem ao servidor
+		responseObserver.onNext(mensagem);
+		//encerra a resposta após completar
+		responseObserver.onCompleted();
 	}
 
+	//FIM DOS MÉTODOS DE CONEXÃO DO JOGADOR
+	
 	//método para computar as jogadas do jogador
 	@Override 
 	public synchronized void enviarJogada(JogadaRequest request, io.grpc.stub.StreamObserver<com.xadrez.grpc.JogadaResponse> responseObserver) {

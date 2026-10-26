@@ -3,6 +3,7 @@ package com.xadrez.models;
 import java.util.ArrayList;
 
 import com.google.gson.JsonObject;
+import com.xadrez.utils.*;
 
 public class Jogador {
 	private String id;
@@ -32,33 +33,20 @@ public class Jogador {
 
 	//método para verificar se o nome atende as regras
 	public JsonObject verificaNome(ArrayList<Jogador> jogadores) {
-		//verifica se nome está vazio
-		if(this.nome.isEmpty() || (this.nome.length() > 15 || this.nome.length() < 3)) {
+		//verifica se tem menos que 3 letras ou mais que 15
+		if(this.nome.length() > 15 || this.nome.length() < 3) {
 			//cria um JSON para montar a resposta (informar ao código principal que está inválido)
-			return montaRespotaJsonObject("9", "Nome inválido, insira um nome válido e tente novamente. Nome deve ser maior que 3 carácteres, menor que 15 e não pode estar vazio.");
+			return Utils.montaRespotaJsonObject("3", "Nome inválido, insira um nome válido e tente novamente. Nome deve ser maior ou igual a 3 carácteres, menor ou igual a 15 carácteres e não pode estar vazio.");
 		}
 		
 		for(Jogador jogador : jogadores) {
-			if(this.nome.equals(jogador.getNome())) {
+			if(this.nome.equalsIgnoreCase(jogador.getNome())) {
 				//cria um JSON para montar a resposta (informar ao código principal que está inválido)
-				return montaRespotaJsonObject("9", "Nome inválido! Nome deve ser único.");
+				return Utils.montaRespotaJsonObject("3", "Nome inválido! Nome deve ser único.");
 			}
 		}
 		
 		//cria um JSON para montar a resposta (informar ao código principal que está inválido)
-		return montaRespotaJsonObject("0", "Sucesso! Nome válido!");
-	}
-	
-	//método para montar a resposta em JSON que é enviada ao IMPL
-	public JsonObject montaRespotaJsonObject(String codigo, String descricao) {
-		//cria um JSON para montar a resposta (informar ao código principal que está inválido)
-		JsonObject resposta = new JsonObject();
-
-		//adiciona no JSON as chaves de código de erro e descrição
-		resposta.addProperty("código", codigo);
-		resposta.addProperty("descrição", descricao);
-			
-		//retorna o erro ao código principal
-		return resposta;
+		return Utils.montaRespotaJsonObject("0", "Sucesso! Nome válido!");
 	}
 }
