@@ -3,15 +3,15 @@ package com.xadrez.models;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
+
+import com.xadrez.models.enums.CorPecaEnum.CorPecas;
 import com.xadrez.utils.*;
 
 import com.google.gson.JsonObject;
 
 public class Partida {
     private String idPartida;
-	public enum CorPecas {
-		BRANCAS, PRETAS
-	}
+	public CorPecas corPecas;
 	private final Map<CorPecas, Jogador> jogadores = new EnumMap<>(CorPecas.class);
     
 	public Partida(String idPartida) {
@@ -25,7 +25,7 @@ public class Partida {
 	public void setIdPartida(String idPartida) {
 		this.idPartida = idPartida;
 	}
-
+	
 	//verifica se já tem 2 jogadores
 	public JsonObject verificaSeJogoEstaCheio() {
 		if(jogadores.size() == 2) {

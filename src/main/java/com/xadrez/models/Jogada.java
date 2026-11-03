@@ -34,4 +34,6 @@ public class Jogada {
 	public void setPosicaoDestino(String posicaoDestino) {
 		this.posicaoDestino = posicaoDestino;
 	}
+	
+	
 }

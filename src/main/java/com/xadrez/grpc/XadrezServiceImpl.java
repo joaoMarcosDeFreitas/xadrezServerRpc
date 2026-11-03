@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.google.gson.JsonObject;
 import com.xadrez.models.Jogador;
 import com.xadrez.models.Partida;
+import com.xadrez.models.enums.CorPecaEnum.CorPecas;
 
 import io.grpc.Status;
 
@@ -58,9 +59,9 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 		}
 		
 		//verifica cores disponíveis no jogo. Aqui é definido quantas vagas sobraram
-		ArrayList<Partida.CorPecas> coresDisponiveis = partida.corDisponivel();
+		ArrayList<CorPecas> coresDisponiveis = partida.corDisponivel();
 		//Adiciona a cor ao jogador, sempre com índice 0 para garantir que pega sempre o primeiro. (Quem entra primeiro sempre é branca)
-		Partida.CorPecas corPecaEscolhida = coresDisponiveis.get(0);
+		CorPecas corPecaEscolhida = coresDisponiveis.get(0);
 		partida.adicionarCorPecasJogadores(corPecaEscolhida, jogador);
 		//utiliza o método para retornar sucesso ao servidor
 		responderServidorSucessoConectarJogador(responseObserver, jogador, corPecaEscolhida);
@@ -91,7 +92,7 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 	}
 		
 	//método para responder o servidor com sucesso. (REFERENTE A CONEXÃO DE JOGADOR)
-	public void responderServidorSucessoConectarJogador(io.grpc.stub.StreamObserver<com.xadrez.grpc.ConectarResponse> responseObserver, Jogador jogador, Partida.CorPecas corPecaEscolhida) {
+	public void responderServidorSucessoConectarJogador(io.grpc.stub.StreamObserver<com.xadrez.grpc.ConectarResponse> responseObserver, Jogador jogador, CorPecas corPecaEscolhida) {
 		//monta a mensagem de sucesso ao servidor
 		ConectarResponse mensagem = ConectarResponse.newBuilder()
 				.setIdJogador(jogador.getId())
