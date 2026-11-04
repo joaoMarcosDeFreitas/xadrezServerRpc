@@ -47,7 +47,7 @@ public class Posicao {
 		this.posicaoDestino = posicaoDestino;
 	}
 
-	public JsonObject conversorDeMovimento() {
+	public void conversorDeMovimento() {
 		Pattern padraoBuscado = Pattern.compile("\\b[a-h][1-8]\\b", Pattern.CASE_INSENSITIVE);
 		Matcher buscaPadrao = padraoBuscado.matcher(posicaoDestino);	
 		

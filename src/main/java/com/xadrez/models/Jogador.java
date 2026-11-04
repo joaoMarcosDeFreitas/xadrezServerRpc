@@ -49,4 +49,5 @@ public class Jogador {
 		//cria um JSON para montar a resposta (informar ao código principal que está inválido)
 		return Utils.montaRespotaJsonObject("0", "Sucesso! Nome válido!");
 	}
+		
 }

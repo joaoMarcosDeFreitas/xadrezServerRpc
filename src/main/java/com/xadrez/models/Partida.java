@@ -26,24 +26,34 @@ public class Partida {
 		this.idPartida = idPartida;
 	}
 	
+	//verifica se o jogador já entrou na partida
+	public Boolean verificaReconexao(Jogador jogadorBuscado) {
+		//looping na lista de jogadores
+		for(Jogador jogador : jogadores.values()) {
+			//verifica se o ID é igual
+			if(jogadorBuscado.getId().equals(jogador.getId())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//pega a cor da peça do jogador
+	public CorPecas getCorPecaJogador(Jogador jogadorBuscado) {
+		for(Map.Entry<CorPecas, Jogador> listaIteravel : jogadores.entrySet()) {
+			if(listaIteravel.getValue().getId().equals(jogadorBuscado.getId())) {
+				return listaIteravel.getKey();
+			}
+		}
+		return null;
+	}
+	
 	//verifica se já tem 2 jogadores
 	public JsonObject verificaSeJogoEstaCheio() {
 		//cria um JSON para montar a resposta (informar ao código principal que está inválido)
 		return jogadores.size() >= 2 ? Utils.montaRespotaJsonObject("9", "Jogo está cheio! Tente novamente mais tarde") : Utils.montaRespotaJsonObject("0", "Sucesso! Sala tem vaga!");
 	}
 
-	//verifica se é reconexão de jogador
-	public Boolean verificaReconexao(Jogador jogador) {
-		//torna o mapa iteravel para loopar e verificar o jogador
-		for(Map.Entry<CorPecas, Jogador> listaJogadoresIteravel : jogadores.entrySet()) {
-			//verifica se o id da lista iterável é o mesmo do jogador
-			if(!listaJogadoresIteravel.getValue().getId().equals(jogador.getId())) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
 	//verifica qual cor está disponível
 	public ArrayList<CorPecas> corDisponivel() {
 		//cria um array de CorPecas para armazenas os disponíveis
@@ -55,20 +65,6 @@ public class Partida {
 			}
 		}
 		return listaDeDisponibilidade;
-	}
-	
-	//verifica se o jogador já entrou na partida
-	public JsonObject verificaSeJogadorEntrou(Jogador jogadorParaAdicionar) {
-		//looping na lista de jogadores
-		for(Jogador jogador : jogadores.values()) {
-			//verifica se o ID é igual
-			if(jogadorParaAdicionar.getId().equals(jogador.getId())) 
-				//cria um JSON para montar a resposta
-				return Utils.montaRespotaJsonObject("9", "Jogador já entrou no jogo. Aguarde seu oponente!");
-		}
-		
-		//cria um JSON para montar a resposta
-		return Utils.montaRespotaJsonObject("0", "Sucesso! Jogador pode entrar na partida.");
 	}
 	
 	//adiciona um jogador ao jogo

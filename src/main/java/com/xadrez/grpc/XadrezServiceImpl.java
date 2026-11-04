@@ -30,36 +30,45 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 						UUID.randomUUID().toString() : request.getIdJogador().trim(), 
 				request.getNomeJogador().trim()
 		);
-		
-		//verifica se o jogo está cheio (2 jogadores entraram) ou se está cheio e o usuário está reconectando.
-		JsonObject verificaSeJogoEstaCheio = partida.verificaSeJogoEstaCheio();
-		if(verificaSeJogoEstaCheio.get("código").getAsString().equals("9") || (verificaSeJogoEstaCheio.get("código").getAsString().equals("9") && !partida.verificaReconexao(jogador))) {
-			//utiliza o método para retornar erro ao servidor
-			responderServidorErroConectarJogador(responseObserver, verificaSeJogoEstaCheio.get("código").getAsString(), verificaSeJogoEstaCheio.get("descrição").getAsString());
+
+		//verifica se é reconexão
+		if(partida.verificaReconexao(jogador)) {
+			//pega a cor do jogador que se reconectou
+			CorPecas corPecaEscolhida = partida.getCorPecaJogador(jogador);
+			//utiliza o método para retornar sucesso ao servidor
+			responderServidorSucessoConectarJogador(responseObserver, jogador, corPecaEscolhida);
+			//return para parar o código
+			return;
+		} else {
+			//verifica se o nome passado está válido (não é vazio e tem tamanho adequado)
+			JsonObject respostaVerificaNome = jogador.verificaNome(partida.listaJogadores());
+			if(respostaVerificaNome.get("código").getAsString().equals("3")) {
+				//utiliza o método para retornar erro ao servidor
+				responderServidorErroConectarJogador(responseObserver, respostaVerificaNome.get("código").getAsString(), respostaVerificaNome.get("descrição").getAsString());
+				//return para parar o código
+				return;
+			}
+			
+			//Verificações de tamanho da sala e reconexão de jogadores
+			
+			
+			String respostaVerificaSeJogoEstaCheio = partida.verificaSeJogoEstaCheio().get("código").getAsString();
+			if(respostaVerificaSeJogoEstaCheio.equals("9")) {
+				
+			}
+			
+			//jogo tem vaga
+			
+			//verifica cores disponíveis no jogo. Aqui é definido quantas vagas sobraram
+			ArrayList<CorPecas> coresDisponiveis = partida.corDisponivel();
+			//Adiciona a cor ao jogador, sempre com índice 0 para garantir que pega sempre o primeiro. (Quem entra primeiro sempre é branca)
+			CorPecas corPecaEscolhida = coresDisponiveis.get(0);
+			partida.adicionarCorPecasJogadores(corPecaEscolhida, jogador);
+			//utiliza o método para retornar sucesso ao servidor
+			responderServidorSucessoConectarJogador(responseObserver, jogador, corPecaEscolhida);
 			//return para parar o código
 			return;
 		}
-		
-		//jogo tem vaga (pode ser uma ou duas).
-		
-		//verifica se o nome passado está válido (não é vazio e tem tamanho adequado)
-		JsonObject verificaNome = jogador.verificaNome(partida.listaJogadores());
-		if(verificaNome.get("código").getAsString().equals("3")) {
-			//utiliza o método para retornar erro ao servidor
-			responderServidorErroConectarJogador(responseObserver, verificaNome.get("código").getAsString(), verificaNome.get("descrição").getAsString());
-			//return para parar o código
-			return;
-		}
-		
-		//verifica cores disponíveis no jogo. Aqui é definido quantas vagas sobraram
-		ArrayList<CorPecas> coresDisponiveis = partida.corDisponivel();
-		//Adiciona a cor ao jogador, sempre com índice 0 para garantir que pega sempre o primeiro. (Quem entra primeiro sempre é branca)
-		CorPecas corPecaEscolhida = coresDisponiveis.get(0);
-		partida.adicionarCorPecasJogadores(corPecaEscolhida, jogador);
-		//utiliza o método para retornar sucesso ao servidor
-		responderServidorSucessoConectarJogador(responseObserver, jogador, corPecaEscolhida);
-		//return para parar o código
-		return;
 	}
 	
 	//método para responder o servidor com erro. (REFERENTE A CONEXÃO DE JOGADOR)
