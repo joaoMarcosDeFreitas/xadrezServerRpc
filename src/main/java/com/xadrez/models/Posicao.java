@@ -1,13 +1,18 @@
 package com.xadrez.models;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Posicao {
-	private String coluna;
-	private String linha;
+	private String posicaoOrigem;
+	private String posicaoDestino;
+	public String coluna;
+	public String linha;
 	
-	public Posicao(String coluna, String linha) {
+	public Posicao(String posicaoOrigem, String posicaoDestino) {
 		super();
-		this.coluna = coluna;
-		this.linha = linha;
+		this.posicaoOrigem = posicaoOrigem;
+		this.posicaoDestino = posicaoDestino;
 	}
 	
 	public String getColuna() {
@@ -25,6 +30,32 @@ public class Posicao {
 	public void setLinha(String linha) {
 		this.linha = linha;
 	}
-	
-	
+
+	public String getPosicaoOrigem() {
+		return posicaoOrigem;
+	}
+
+	public void setPosicaoOrigem(String posicaoOrigem) {
+		this.posicaoOrigem = posicaoOrigem;
+	}
+
+	public String getPosicaoDestino() {
+		return posicaoDestino;
+	}
+
+	public void setPosicaoDestino(String posicaoDestino) {
+		this.posicaoDestino = posicaoDestino;
+	}
+
+	public JsonObject conversorDeMovimento() {
+		Pattern padraoBuscado = Pattern.compile("\\b[a-h][1-8]\\b", Pattern.CASE_INSENSITIVE);
+		Matcher buscaPadrao = padraoBuscado.matcher(posicaoDestino);	
+		
+		if(buscaPadrao.find()) {
+			Pattern padraoLinhaBuscado = Pattern.compile("[a-h]", Pattern.CASE_INSENSITIVE);
+			Matcher buscaLinhaPadrao = padraoLinhaBuscado.matcher(posicaoDestino);
+			
+			String linha;
+		}
+	}
 }

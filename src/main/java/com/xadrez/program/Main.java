@@ -8,12 +8,12 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			ServerBuilder.forPort(50051)
+			System.out.println("Servidor rodando na porta 50051 🚀");
+			ServerBuilder.forPort(50060)
 			.addService(new XadrezServiceImpl())
 			.build()
 			.start()
 			.awaitTermination();
-			
 			
 		} catch(Exception e) {
 			System.out.println(e.getMessage().toString());

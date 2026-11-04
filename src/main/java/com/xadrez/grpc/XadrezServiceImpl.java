@@ -23,16 +23,7 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 	public synchronized void conectarJogador(ConectarRequest request, io.grpc.stub.StreamObserver<com.xadrez.grpc.ConectarResponse> responseObserver) {
 		//verificações da partida (se está livre para entrada de jogadores e quais cores estão livres -> assim define quantos jogadores tem em sala)
 		
-		//verifica se o jogo está cheio (2 jogadores entraram)
-		JsonObject verificaSeJogoEstaCheio = partida.verificaSeJogoEstaCheio();
-		if(verificaSeJogoEstaCheio.get("código").getAsString().equals("9")) {
-			//utiliza o método para retornar erro ao servidor
-			responderServidorErroConectarJogador(responseObserver, verificaSeJogoEstaCheio.get("código").getAsString(), verificaSeJogoEstaCheio.get("descrição").getAsString());
-			//return para parar o código
-			return;
-		}
-		
-		//jogo tem vaga (pode ser uma ou duas). De qualquer forma, precisamos iniciar o jogador que vai entrar.
+		//De qualquer forma, precisamos iniciar o jogador que vai entrar.
 		//cria o objeto jogador com ID novo ou se já foi enviado um ID ele cria com o ID enviado
 		Jogador jogador = new Jogador(
 				request.getIdJogador().isBlank() ? 
@@ -40,14 +31,16 @@ public class XadrezServiceImpl extends XadrezServiceGrpc.XadrezServiceImplBase {
 				request.getNomeJogador().trim()
 		);
 		
-		//verifica se jogador já entrou anteriormente na partida
-		JsonObject verificaSeJogadorJaEntrou = partida.verificaSeJogadorEntrou(jogador);
-		if(verificaSeJogadorJaEntrou.get("código").getAsString().equals("9")) {
+		//verifica se o jogo está cheio (2 jogadores entraram) ou se está cheio e o usuário está reconectando.
+		JsonObject verificaSeJogoEstaCheio = partida.verificaSeJogoEstaCheio();
+		if(verificaSeJogoEstaCheio.get("código").getAsString().equals("9") || (verificaSeJogoEstaCheio.get("código").getAsString().equals("9") && !partida.verificaReconexao(jogador))) {
 			//utiliza o método para retornar erro ao servidor
-			responderServidorErroConectarJogador(responseObserver, verificaSeJogadorJaEntrou.get("código").getAsString(), verificaSeJogadorJaEntrou.get("descrição").getAsString());
+			responderServidorErroConectarJogador(responseObserver, verificaSeJogoEstaCheio.get("código").getAsString(), verificaSeJogoEstaCheio.get("descrição").getAsString());
 			//return para parar o código
 			return;
 		}
+		
+		//jogo tem vaga (pode ser uma ou duas).
 		
 		//verifica se o nome passado está válido (não é vazio e tem tamanho adequado)
 		JsonObject verificaNome = jogador.verificaNome(partida.listaJogadores());
