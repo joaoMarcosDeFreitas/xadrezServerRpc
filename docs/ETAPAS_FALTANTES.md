@@ -2,17 +2,6 @@
 
 Regra de trabalho: uma sub-etapa por vez. Item resolvido e conferido sai deste arquivo.
 
-## Etapa 1 — Pré-jogo e reconexão
-- 1.1 `Partida` localiza um jogador pelo id e informa nome e cor dele.
-- 1.2 Reconexão verificada primeiro no `conectarJogador`: id conhecido recebe de volta id, partida, nome cadastrado e cor, mesmo com a sala cheia. O nome enviado é ignorado.
-- 1.3 Sala cheia só barra jogador novo, com `FAILED_PRECONDITION`.
-- 1.4 Id enviado que o servidor não conhece é ignorado e substituído por um id novo.
-- 1.5 `Partida` protege a entrada sozinha: máximo de 2 jogadores, sem repetir jogador e sem sobrescrever cor ocupada.
-- 1.6 Estado explícito da partida (aguardando, em andamento, finalizada).
-- 1.7 Cor da vez; ao entrar o segundo jogador, a partida passa para "em andamento" com o turno das brancas.
-- 1.8 Limpezas: cor oposta no enum de cor, remover `setIdPartida` e o campo público `corPecas`.
-- 1.9 `Main`: a mensagem e a porta precisam ser a mesma.
-
 ## Etapa 2 — Peças e coordenadas
 - 2.2 Representação em texto da peça, para o estado enviado ao cliente.
 - 2.3 `Posicao` com coluna e linha imutáveis; posição inválida não pode ser criada (hoje a classe não compila).

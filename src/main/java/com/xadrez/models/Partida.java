@@ -5,27 +5,31 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import com.xadrez.models.enums.CorPecaEnum.CorPecas;
-import com.xadrez.utils.*;
-
-import com.google.gson.JsonObject;
+import com.xadrez.models.enums.EstadoDaPartidaEnum.EstadoDaPartida;
 
 public class Partida {
     private String idPartida;
-	public CorPecas corPecas;
 	private final Map<CorPecas, Jogador> jogadores = new EnumMap<>(CorPecas.class);
+	private EstadoDaPartida estadoDaPartida;
+	private CorPecas turno;
     
 	public Partida(String idPartida) {
 		this.idPartida = idPartida;
+		this.estadoDaPartida = EstadoDaPartida.AGUARDANDO;
 	}
 
 	public String getIdPartida() {
 		return idPartida;
 	}
-
-	public void setIdPartida(String idPartida) {
-		this.idPartida = idPartida;
+	
+	public EstadoDaPartida getEstadoDaPartida() {
+		return estadoDaPartida;
 	}
 	
+	public CorPecas getTurno() {
+		return turno;
+	}
+
 	//verifica se o jogador já entrou na partida
 	public Boolean verificaReconexao(Jogador jogadorBuscado) {
 		//looping na lista de jogadores
@@ -39,19 +43,19 @@ public class Partida {
 	}
 
 	//pega a cor da peça do jogador
-	public CorPecas getCorPecaJogador(Jogador jogadorBuscado) {
-		for(Map.Entry<CorPecas, Jogador> listaIteravel : jogadores.entrySet()) {
-			if(listaIteravel.getValue().getId().equals(jogadorBuscado.getId())) {
-				return listaIteravel.getKey();
+	public Map.Entry<CorPecas, Jogador> getJogador(Jogador jogadorBuscado) {
+		for(Map.Entry<CorPecas, Jogador> jogador : jogadores.entrySet()) {
+			if(jogador.getValue().getId().equals(jogadorBuscado.getId())) {
+				return jogador;
 			}
 		}
 		return null;
 	}
 	
 	//verifica se já tem 2 jogadores
-	public JsonObject verificaSeJogoEstaCheio() {
+	public Boolean verificaSeJogoEstaCheio() {
 		//cria um JSON para montar a resposta (informar ao código principal que está inválido)
-		return jogadores.size() >= 2 ? Utils.montaRespotaJsonObject("9", "Jogo está cheio! Tente novamente mais tarde") : Utils.montaRespotaJsonObject("0", "Sucesso! Sala tem vaga!");
+		return jogadores.size() >= 2 ? true : false;
 	}
 
 	//verifica qual cor está disponível
@@ -69,8 +73,19 @@ public class Partida {
 	
 	//adiciona um jogador ao jogo
 	public void adicionarCorPecasJogadores(CorPecas cor, Jogador jogadorParaAdicionar) {
-		//adiciona a cor e o jogador ao mapa de jogadores
-		this.jogadores.put(cor, jogadorParaAdicionar);
+		if(jogadores.size() < 2) {
+			for(Map.Entry<CorPecas, Jogador> jogador : jogadores.entrySet()) {
+				if(jogador.getValue().getId().equals(jogadorParaAdicionar.getId()) || jogador.getKey().equals(cor)) {
+					return;
+				}
+			}
+			//adiciona a cor e o jogador ao mapa de jogadores
+			this.jogadores.put(cor, jogadorParaAdicionar);
+			if(jogadores.size() == 2) {
+				this.estadoDaPartida = EstadoDaPartida.EM_ANDAMENTO;
+				this.turno = CorPecas.BRANCAS;
+			}
+		}
 	}
 	
 	//pega a lista de jogadores que está presente
@@ -84,5 +99,9 @@ public class Partida {
 		}
 		//retorna os jogadores
 		return jogadoresNaLista;
+	}
+	
+	public void trocarTurno() {
+		this.turno = this.turno.oposta();
 	}
 }

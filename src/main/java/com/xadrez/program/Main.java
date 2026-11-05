@@ -8,8 +8,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			System.out.println("Servidor rodando na porta 50051 🚀");
-			ServerBuilder.forPort(50060)
+			System.out.println("Servidor rodando na porta 50040 🚀");
+			ServerBuilder.forPort(50040)
 			.addService(new XadrezServiceImpl())
 			.build()
 			.start()

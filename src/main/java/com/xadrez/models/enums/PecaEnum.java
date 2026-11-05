@@ -7,6 +7,6 @@ public class PecaEnum {
 		CAVALO,
 		BISPO,
 		RAINHA,
-		REI
+		REI;
 	}
 }
