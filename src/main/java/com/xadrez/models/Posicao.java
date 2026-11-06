@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 public class Posicao {
 	private String posicaoOrigem;
 	private String posicaoDestino;
-	public String coluna;
-	public String linha;
+	private String coluna;
+	private String linha;
 	
 	public Posicao(String posicaoOrigem, String posicaoDestino) {
 		super();
@@ -19,16 +19,8 @@ public class Posicao {
 		return coluna;
 	}
 	
-	public void setColuna(String coluna) {
-		this.coluna = coluna;
-	}
-	
 	public String getLinha() {
 		return linha;
-	}
-	
-	public void setLinha(String linha) {
-		this.linha = linha;
 	}
 
 	public String getPosicaoOrigem() {
@@ -48,14 +40,19 @@ public class Posicao {
 	}
 
 	public void conversorDeMovimento() {
+		//validador de padrão
 		Pattern padraoBuscado = Pattern.compile("\\b[a-h][1-8]\\b", Pattern.CASE_INSENSITIVE);
-		Matcher buscaPadrao = padraoBuscado.matcher(posicaoDestino);	
+		Matcher buscaPadrao = padraoBuscado.matcher(this.posicaoDestino);	
 		
+		//padrão encontrado, são validas as posições
 		if(buscaPadrao.find()) {
-			Pattern padraoLinhaBuscado = Pattern.compile("[a-h]", Pattern.CASE_INSENSITIVE);
-			Matcher buscaLinhaPadrao = padraoLinhaBuscado.matcher(posicaoDestino);
+			//atribui a letra a linha
+			this.linha = this.posicaoDestino.split("[a-h]")[0];
 			
-			String linha;
+			//atribui o numero a coluna
+			this.coluna = this.posicaoDestino.split("[a-h]")[1];
+			
+			
 		}
 	}
 }

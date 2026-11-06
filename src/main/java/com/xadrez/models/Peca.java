@@ -49,5 +49,8 @@ public class Peca {
 		this.textoCor = textoCor;
 	}
 	
-	
+	//método para retornar o nome da peça
+	public String nomePeca() {
+		return this.tipoPeca.toString();
+	}
 }
