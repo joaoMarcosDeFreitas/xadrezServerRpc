@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="800" viewBox="0 0 1440 800"><rect width="1440" height="800" fill="white"/>
+<rect x="30" y="20" width="160" height="52" rx="6" fill="#eef3fb" stroke="#33507a" stroke-width="1.5"/>
+<text x="110" y="42" font-family="Helvetica" font-size="13" text-anchor="middle" fill="#111" font-weight="bold">Jogador /</text>
+<text x="110" y="59" font-family="Helvetica" font-size="13" text-anchor="middle" fill="#111" >Frontend</text>
+<line x1="110" y1="72" x2="110" y2="770" stroke="#777" stroke-dasharray="6,5"/>
+<rect x="260" y="20" width="160" height="52" rx="6" fill="#eef3fb" stroke="#33507a" stroke-width="1.5"/>
+<text x="340" y="42" font-family="Helvetica" font-size="13" text-anchor="middle" fill="#111" font-weight="bold">Stub</text>
+<text x="340" y="59" font-family="Helvetica" font-size="13" text-anchor="middle" fill="#111" >(XadrezServiceGrpc)</text>
+<line x1="340" y1="72" x2="340" y2="770" stroke="#777" stroke-dasharray="6,5"/>
+<rect x="490" y="20" width="160" height="52" rx="6" fill="#eef3fb" stroke="#33507a" stroke-width="1.5"/>
+<text x="570" y="42" font-family="Helvetica" font-size="13" text-anchor="middle" fill="#111" font-weight="bold">ManagedChannel</text>
+<text x="570" y="59" font-family="Helvetica" font-size="13" text-anchor="middle" fill="#111" >(rede HTTP/2)</text>
+<line x1="570" y1="72" x2="570" y2="770" stroke="#777" stroke-dasharray="6,5"/>
+<rect x="720" y="20" width="160" height="52" rx="6" fill="#eef3fb" stroke="#33507a" stroke-width="1.5"/>
+<text x="800" y="42" font-family="Helvetica" font-size="13" text-anchor="middle" fill="#111" font-weight="bold">Skeleton</text>
+<text x="800" y="59" font-family="Helvetica" font-size="13" text-anchor="middle" fill="#111" >(XadrezServiceImplBase)</text>
+<line x1="800" y1="72" x2="800" y2="770" stroke="#777" stroke-dasharray="6,5"/>
+<rect x="950" y="20" width="160" height="52" rx="6" fill="#eef3fb" stroke="#33507a" stroke-width="1.5"/>
+<text x="1030" y="42" font-family="Helvetica" font-size="13" text-anchor="middle" fill="#111" font-weight="bold">XadrezServiceImpl</text>
+<line x1="1030" y1="72" x2="1030" y2="770" stroke="#777" stroke-dasharray="6,5"/>
+<rect x="1180" y="20" width="160" height="52" rx="6" fill="#eef3fb" stroke="#33507a" stroke-width="1.5"/>
+<text x="1260" y="42" font-family="Helvetica" font-size="13" text-anchor="middle" fill="#111" font-weight="bold">Partida /</text>
+<text x="1260" y="59" font-family="Helvetica" font-size="13" text-anchor="middle" fill="#111" >Tabuleiro</text>
+<line x1="1260" y1="72" x2="1260" y2="770" stroke="#777" stroke-dasharray="6,5"/>
+<path d="M110 105 h38 v22 h-38" fill="none" stroke="#222" stroke-width="1.6"/>
+<polygon points="110,127 121,122 121,132" fill="#222"/>
+<text x="156" y="120" font-family="Helvetica" font-size="12.5" text-anchor="start" fill="#111" >1. Seleciona a casa de destino (origem já conhecida)</text>
+<line x1="110" y1="167" x2="338" y2="167" stroke="#222" stroke-width="1.6"/>
+<polygon points="340,167 326,161 326,173" fill="#222"/>
+<rect x="124.0" y="148" width="202.0" height="16" fill="white"/>
+<text x="225.0" y="160" font-family="Helvetica" font-size="12.5" text-anchor="middle" fill="#111" >2. enviarJogada(JogadaRequest)</text>
+<line x1="340" y1="215" x2="568" y2="215" stroke="#222" stroke-width="1.6"/>
+<polygon points="570,215 556,209 556,221" fill="#222"/>
+<rect x="370.0" y="196" width="170.0" height="16" fill="white"/>
+<text x="455.0" y="208" font-family="Helvetica" font-size="12.5" text-anchor="middle" fill="#111" >3. marshalling (Protobuf)</text>
+<line x1="570" y1="263" x2="798" y2="263" stroke="#222" stroke-width="1.6"/>
+<polygon points="800,263 786,257 786,269" fill="#222"/>
+<rect x="577.6" y="244" width="214.8" height="16" fill="white"/>
+<text x="685.0" y="256" font-family="Helvetica" font-size="12.5" text-anchor="middle" fill="#111" >4. HTTP/2 sobre TCP, porta 50040</text>
+<line x1="800" y1="311" x2="1028" y2="311" stroke="#222" stroke-width="1.6"/>
+<polygon points="1030,311 1016,305 1016,317" fill="#222"/>
+<rect x="756.4" y="292" width="317.20000000000005" height="16" fill="white"/>
+<text x="915.0" y="304" font-family="Helvetica" font-size="12.5" text-anchor="middle" fill="#111" >5. unmarshalling e enviarJogada() [synchronized]</text>
+<path d="M1030 359 h38 v22 h-38" fill="none" stroke="#222" stroke-width="1.6"/>
+<polygon points="1030,381 1041,376 1041,386" fill="#222"/>
+<text x="1076" y="374" font-family="Helvetica" font-size="12.5" text-anchor="start" fill="#111" >6. Valida partida, jogador, vez e regras</text>
+<line x1="1030" y1="421" x2="1258" y2="421" stroke="#222" stroke-width="1.6"/>
+<polygon points="1260,421 1246,415 1246,427" fill="#222"/>
+<rect x="999.2" y="402" width="291.6" height="16" fill="white"/>
+<text x="1145.0" y="414" font-family="Helvetica" font-size="12.5" text-anchor="middle" fill="#111" >7. Move/captura, passa turno, verifica xeque</text>
+<line x1="1260" y1="469" x2="1032" y2="469" stroke="#222" stroke-width="1.6" stroke-dasharray="6,4"/>
+<polygon points="1030,469 1044,463 1044,475" fill="#222"/>
+<rect x="1085.6" y="450" width="118.80000000000001" height="16" fill="white"/>
+<text x="1145.0" y="462" font-family="Helvetica" font-size="12.5" text-anchor="middle" fill="#111" >estado atualizado</text>
+<line x1="1030" y1="517" x2="802" y2="517" stroke="#222" stroke-width="1.6" stroke-dasharray="6,4"/>
+<polygon points="800,517 814,511 814,523" fill="#222"/>
+<rect x="855.6" y="498" width="118.80000000000001" height="16" fill="white"/>
+<text x="915.0" y="510" font-family="Helvetica" font-size="12.5" text-anchor="middle" fill="#111" >8. JogadaResponse</text>
+<line x1="800" y1="553" x2="572" y2="553" stroke="#222" stroke-width="1.6" stroke-dasharray="6,4"/>
+<polygon points="570,553 584,547 584,559" fill="#222"/>
+<rect x="680.0" y="534" width="10.0" height="16" fill="white"/>
+<text x="685.0" y="546" font-family="Helvetica" font-size="12.5" text-anchor="middle" fill="#111" ></text>
+<line x1="570" y1="589" x2="342" y2="589" stroke="#222" stroke-width="1.6" stroke-dasharray="6,4"/>
+<polygon points="340,589 354,583 354,595" fill="#222"/>
+<rect x="450.0" y="570" width="10.0" height="16" fill="white"/>
+<text x="455.0" y="582" font-family="Helvetica" font-size="12.5" text-anchor="middle" fill="#111" ></text>
+<line x1="340" y1="625" x2="112" y2="625" stroke="#222" stroke-width="1.6" stroke-dasharray="6,4"/>
+<polygon points="110,625 124,619 124,631" fill="#222"/>
+<rect x="63.19999999999999" y="606" width="323.6" height="16" fill="white"/>
+<text x="225.0" y="618" font-family="Helvetica" font-size="12.5" text-anchor="middle" fill="#111" >8. JogadaResponse (jogadaValida, mensagemRetorno)</text>
+<line x1="30" y1="665" x2="1410" y2="665" stroke="#a33" stroke-dasharray="3,4"/>
+<text x="40" y="683" font-family="Helvetica" font-size="13" text-anchor="start" fill="#a33" font-weight="bold">9. Notificação do outro jogador (polling)</text>
+<line x1="110" y1="717" x2="1028" y2="717" stroke="#222" stroke-width="1.6"/>
+<polygon points="1030,717 1016,711 1016,723" fill="#222"/>
+<rect x="305.8" y="698" width="528.4" height="16" fill="white"/>
+<text x="570.0" y="710" font-family="Helvetica" font-size="12.5" text-anchor="middle" fill="#111" >obterEstadoDoJogo(EstadoRequest) [consulta periódica, via stub, canal e skeleton]</text>
+<line x1="1030" y1="765" x2="112" y2="765" stroke="#222" stroke-width="1.6" stroke-dasharray="6,4"/>
+<polygon points="110,765 124,759 124,771" fill="#222"/>
+<rect x="395.4" y="746" width="349.20000000000005" height="16" fill="white"/>
+<text x="570.0" y="758" font-family="Helvetica" font-size="12.5" text-anchor="middle" fill="#111" >EstadoResponse (posicaoPecas, turnoAtual, estadoJogo)</text>
+</svg>

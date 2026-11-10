@@ -1,0 +1,5 @@
+1. Introdução: Descrição do jogo escolhido e motivação da escolha do protocolo (RPC ou
+RMI).
+
+2. Arquitetura da Solução: Diagrama da arquitetura (Cliente, Servidor, Stub/Skeleton,
+Middleware/Registry) e explicação do fluxo de mensagem a cada jogada.
