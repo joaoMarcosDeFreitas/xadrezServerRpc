@@ -14,7 +14,7 @@ Atualizado em 2026-11-09, depois de comparar a lista com o código atual.
 
 | Etapa | Assunto | Situação |
 |---|---|---|
-| 2 | Peças e coordenadas | Em andamento (2.2 parcial; 2.3 a 2.5 não feitos) |
+| 2 | Peças e coordenadas | Em andamento (2.5: texto feito; faltam deslocamento e igualdade) |
 | 3 | Tabuleiro | Não iniciada (só existe a matriz vazia) |
 | 4 | `ObterEstadoDoJogo` | Não iniciada |
 | 5 | Movimentos | Não iniciada |
@@ -29,20 +29,9 @@ Atualizado em 2026-11-09, depois de comparar a lista com o código atual.
 
 ## Etapa 2 — Peças e coordenadas
 
-**2.2 Texto da peça** — *quase feito*
-- Hoje: `Peca.nomeECorPeca()` devolve um texto com tipo e cor, no formato "Peça: TIPO Cor: COR". Os campos `textoTipo` e `textoCor` (com getters e setters) continuam sem uso.
-- Falta: decidir se esse formato é o definitivo para o cliente (ele tem espaços e acento, e será documentado no item 11.2) e remover ou aproveitar os campos soltos.
-
-**2.3 `Posicao` imutável e válida** — *em andamento*
-- Hoje: a classe já representa uma casa só (construtor com um texto, sem origem e destino, sem setters). Mas os campos não são `final`, e um texto inválido não gera erro: a posição é criada com coluna e linha nulas.
-- Falta: coluna e linha fixas depois de criada (`final`). Posição fora do tabuleiro, nula ou mal escrita não pode ser criada (recusar com erro). Origem e destino ficam na `Jogada` (item 5.7), que ainda usa textos.
-
-**2.4 Criar a partir de texto e converter em índices** — *não funciona*
-- Hoje: a validação do padrão (letra de a a h, número de 1 a 8, maiúscula ou minúscula) está certa. A separação em coluna e linha não funciona: o padrão usado no `split` exige uma letra minúscula seguida de uma maiúscula, o que nunca ocorre em "e2". O resultado é um vetor de um elemento só, e acessar o índice 1 dá `ArrayIndexOutOfBoundsException` para qualquer posição válida. Além disso, a letra está sendo guardada em `linha` e o número em `coluna` (trocados).
-- Falta: separar corretamente (letra é a coluna, número é a linha), aceitando maiúscula e minúscula. Converter para os índices da matriz do tabuleiro (coluna a até h vira 0 a 7; linha 1 até 8 vira o índice correspondente da matriz).
-
-**2.5 Texto, deslocamento e igualdade** — *não feito*
-- Falta: devolver a posição como texto ("e2"). Calcular o deslocamento até outra posição (diferença de colunas e de linhas), que as regras de movimento vão usar. Comparar duas posições por igualdade.
+**2.5 Texto, deslocamento e igualdade** — *em andamento (texto feito)*
+- Hoje: `getCasa()` devolve o texto da própria casa ("e2", "a1", "h8"). Deslocamento e igualdade ainda não existem.
+- Falta: calcular o deslocamento até outra posição, mantendo o sinal (diferença de colunas e de linhas, destino menos origem). Comparar duas posições por igualdade (coluna e linha iguais; se for usar em coleções com hash, sobrescrever o hash junto). Opcional: trocar `NullPointerException` por `IllegalArgumentException` no construtor, e corrigir o comentário que diz que o caractere '2' vale 48 (vale 50).
 
 ---
 
